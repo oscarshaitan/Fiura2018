@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorSecundary">#000000</color>
+    <color name="colorGray">#646464</color>
+    <color name="colorAccent">#fc0002</color>
+
+    <color name="difuseBlack">#9a20201f</color>
+    <color name="black">#000000</color>
+    <color name="white">#d7d7d7</color>
+    <color name="semi_transparent_black">#90000000</color>
+    <color name="softGray">#b9d4e1</color>
+    <color name="yellow">#ffeb53</color>
+
+    <color name="buttonSpeaker">#8edde2</color>
+    <color name="blue">#053ca9</color>
+    <color name="transparent">#00ffffff</color>
+
+
+
+</resources>

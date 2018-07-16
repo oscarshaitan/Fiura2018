@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/home"
+            android:title="Home" />
+        <item
+            android:id="@+id/info"
+            android:icon="@drawable/info2"
+            android:title="Information" />
+        <item
+            android:id="@+id/video"
+            android:icon="@drawable/video"
+            android:title="Video" />
+        <item
+            android:id="@+id/speakers"
+            android:icon="@drawable/confe"
+            android:title="Speakers" />
+        <item
+            android:id="@+id/bands"
+            android:icon="@drawable/guitar"
+            android:title="Bands" />
+        <item
+            android:id="@+id/sponsor"
+            android:icon="@drawable/bookmark"
+            android:title="Sponsors" />
+        <item
+            android:id="@+id/sales"
+            android:icon="@drawable/sale"
+            android:title="Offers" />
+    </group>
+    <item
+        android:title="Social Networks" >
+        <menu>
+            <item
+                android:id="@+id/fb"
+                android:icon="@drawable/fb"
+                android:title="Facebook"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/msn"
+                android:icon="@drawable/messenger"
+                android:title="Messenger"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/youtube"
+                android:icon="@drawable/youtube"
+                android:title="Youtube"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/insta"
+                android:icon="@drawable/instagram"
+                android:title="Instagram"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/twitter"
+                android:icon="@drawable/twitter"
+                android:title="Twitter"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+</menu>
