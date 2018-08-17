@@ -16,4 +16,7 @@
     <string name="title_activity_sponsors">Sponsors</string>
     <string name="title_activity_map">Map</string>
 
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
 </resources>

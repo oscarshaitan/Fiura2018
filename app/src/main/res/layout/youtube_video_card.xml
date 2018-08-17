@@ -1,21 +1,17 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    card_view:cardCornerRadius="6dp"
-    android:layout_marginRight="3dp"
-    android:layout_marginLeft="3dp"
-    android:layout_marginBottom="5dp"
     card_view:cardUseCompatPadding="true"
-    android:background="@color/white">
+    android:background="@color/colorPrimary">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="3dp">
+        android:background="@color/colorPrimary">
 
         <ImageView
             android:id="@+id/video_thumbnail"
@@ -24,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            tools:src="@drawable/ic_thumb_up" />
+            tools:src="@drawable/ic_thumb_up"/>
 
         <TextView
             android:id="@+id/video_title"
@@ -35,8 +31,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@android:color/primary_text_light"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="18sp"
             tools:fontFamily="@font/old_sans_black"
             tools:text="Video Title text that is long enough to make the line wrap around to the next line." />
@@ -55,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:fontFamily="sans-serif-light"
-                android:textColor="@android:color/primary_text_light"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp"
                 tools:text="119,313"
                 tools:fontFamily="@font/old_sans_black"/>
@@ -65,7 +60,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/video_view_count"
-                android:src="@drawable/ic_share" />
+                android:src="@drawable/ic_share"
+                android:tint="@color/colorPrimaryText" />
 
             <TextView
                 android:id="@+id/video_share_text"
@@ -78,7 +74,7 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center_vertical"
                 android:text="Share"
-                android:textColor="@android:color/primary_text_light"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="16sp"
                 tools:fontFamily="@font/old_sans_black"/>
 
@@ -90,7 +86,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@+id/video_view_count"
                 android:gravity="center_vertical"
-                android:src="@drawable/view" />
+                android:src="@drawable/view"
+                android:layout_toLeftOf="@+id/video_view_count"
+                android:tint="@color/colorPrimaryText" />
 
             <ImageView
                 android:id="@+id/video_thumb_up"
@@ -100,7 +98,8 @@
                 android:layout_below="@id/video_view_count"
                 android:layout_toLeftOf="@+id/video_like_count"
                 android:gravity="center_vertical"
-                android:src="@drawable/ic_thumb_up" />
+                android:src="@drawable/ic_thumb_up"
+                android:tint="@color/colorPrimaryText"/>
 
             <TextView
                 android:id="@+id/video_like_count"
@@ -113,7 +112,7 @@
                 android:layout_toLeftOf="@+id/video_thumb_down"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center_vertical"
-                android:textColor="@android:color/primary_text_light"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="14sp"
                 tools:text="99"
                 tools:fontFamily="@font/old_sans_black"/>
@@ -126,7 +125,8 @@
                 android:layout_below="@id/video_view_count"
                 android:layout_toLeftOf="@+id/video_dislike_count"
                 android:gravity="center_vertical"
-                android:src="@drawable/ic_thumb_down" />
+                android:src="@drawable/ic_thumb_down"
+                android:tint="@color/colorPrimaryText"/>
 
             <TextView
                 android:id="@+id/video_dislike_count"
@@ -138,7 +138,7 @@
                 android:layout_marginLeft="12dp"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center_vertical"
-                android:textColor="@android:color/primary_text_light"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="14sp"
                 tools:text="99"
                 tools:fontFamily="@font/old_sans_black"/>
@@ -183,9 +183,9 @@
             android:layout_marginRight="12dp"
             android:layout_marginTop="2dp"
             android:fontFamily="sans-serif-light"
-            android:textColor="@android:color/secondary_text_light"
+            android:textColor="@color/colorPrimaryText"
             tools:fontFamily="@font/old_sans_black"
             tools:text="This is a sample description of the video item that is long enough to wrap around to the next line." />
 
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+</RelativeLayout>

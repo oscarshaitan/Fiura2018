@@ -1,8 +1,8 @@
 package com.AllegorIT.fiura2018;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.res.Resources;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
 
 import com.AllegorIT.fiura2018.model.PlaylistVideos;
 import com.google.api.services.youtube.YouTube;
@@ -51,6 +52,7 @@ public class YouTubeRecyclerViewFragment extends Fragment {
     private static final int SPINNER_ITEM_DROPDOWN_LAYOUT_ID = android.R.layout.simple_spinner_dropdown_item;
 
     private String[] mPlaylistIds;
+    private String[] mPlaylistIdsFake = {"Loading..."};
     private ArrayList<String> mPlaylistTitles;
     private RecyclerView mRecyclerView;
     private PlaylistVideos mPlaylistVideos;
@@ -127,8 +129,8 @@ public class YouTubeRecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // set the Picasso debug indicator only for debug builds
-        Picasso.get()
-                .setIndicatorsEnabled(BuildConfig.DEBUG);
+        //Picasso.get().setIndicatorsEnabled(BuildConfig.DEBUG);
+        Picasso.get().setIndicatorsEnabled(!BuildConfig.DEBUG);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.youtube_recycler_view_fragment, container, false);
@@ -175,7 +177,7 @@ public class YouTubeRecyclerViewFragment extends Fragment {
         // if we don't have the playlist titles yet
         if (mPlaylistTitles == null || mPlaylistTitles.isEmpty()) {
             // initialize the spinner with the playlist ID's so that there's something in the UI until the GetPlaylistTitlesAsyncTask finishes
-            spinnerAdapter = new ArrayAdapter(getContext(), SPINNER_ITEM_LAYOUT_ID, Arrays.asList(mPlaylistIds));
+            spinnerAdapter = new ArrayAdapter(getContext(), SPINNER_ITEM_LAYOUT_ID, Arrays.asList(mPlaylistIdsFake));
         } else {
             // otherwise use the playlist titles for the spinner
             spinnerAdapter = new ArrayAdapter(getContext(), SPINNER_ITEM_LAYOUT_ID, mPlaylistTitles);
@@ -185,16 +187,19 @@ public class YouTubeRecyclerViewFragment extends Fragment {
         mPlaylistSpinner.setAdapter(spinnerAdapter);
 
         // set up the onItemSelectedListener for the spinner
+
         mPlaylistSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // reload the UI with the playlist video list of the selected playlist
-                mPlaylistVideos = new PlaylistVideos(mPlaylistIds[position]);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mPlaylistVideos = new PlaylistVideos(mPlaylistIds[i]);
                 reloadUi(mPlaylistVideos, true);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
         });
     }
 

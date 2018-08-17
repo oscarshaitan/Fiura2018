@@ -1,10 +1,8 @@
 package com.AllegorIT.fiura2018;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -12,70 +10,34 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.AllegorIT.fiura2018.Lib.ViewAnimator;
-import com.AllegorIT.fiura2018.fragment.ContentFragment;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.youtube.YouTube;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import yalantis.com.sidemenu.interfaces.Resourceble;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 
-/**
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import com.AllegorIT.fiura2018.Lib.ViewAnimator;
+import com.AllegorIT.fiura2018.fragment.ContentFragment;
+import com.google.android.gms.maps.model.LatLng;
 
-public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener{
-    private static final String[] YOUTUBE_PLAYLISTS = {
-            "PL8iWcNnkr_eg0g0GjH9hAGN4WQmdge9nw",
-            "PL8iWcNnkr_ehIjudD5A2pFDC170oYJT60"
-    };
 
+public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
     private ViewAnimator viewAnimator;
     private LinearLayout linearLayout;
+    private GridView gv;
 
-    private YouTube mYoutubeDataApi;
-    private final GsonFactory mJsonFactory = new GsonFactory();
-    private final HttpTransport mTransport = AndroidHttp.newCompatibleTransport();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.youtube_activity);
-
-
-        if(!isConnected()){
-            Toast.makeText(YouTubeActivity.this,"No Internet Connection Detected",Toast.LENGTH_LONG).show();
-        }
-        if (savedInstanceState == null) {
-            mYoutubeDataApi = new YouTube.Builder(mTransport, mJsonFactory, null)
-                    .setApplicationName(getResources().getString(R.string.app_name))
-                    .build();
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, YouTubeRecyclerViewFragment.newInstance(mYoutubeDataApi, YOUTUBE_PLAYLISTS))
-                    .commit();
-        }
+        setContentView(R.layout.activity_sponsors);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
@@ -88,11 +50,38 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
         setActionBar();
         createMenuList();
         viewAnimator = new ViewAnimator<>(this, list,drawerLayout,this);
+        gv = findViewById(R.id.grid_view);
+        gv.setAdapter(new GridAdapter(this,getDataSet()));
 
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SponsorObj s =(SponsorObj)adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(getApplicationContext(), Map.class);
+                intent.putExtra("Title",s.getSponsor_name());
+                intent.putExtra("Latlang",s.getPos());
+                startActivity(intent);
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
+        });
     }
 
+    public ArrayList<SponsorObj> getDataSet(){
+        SponsorObj sponsorObj = new SponsorObj(R.drawable.faro_logo, new LatLng(3.397863, -76.539862),"El Faro Pizzeria Limonar");
+        ArrayList<SponsorObj> arrayList = new ArrayList<>();
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        arrayList.add(sponsorObj);
+        return arrayList;
+    }
 
-    private void setActionBar() {
+  private void setActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -125,13 +114,6 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);
-    }
-
-    public boolean isConnected() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     @Override
@@ -222,6 +204,4 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
     public void addViewToContainer(View view) {
         linearLayout.addView(view);
     }
-
 }
-

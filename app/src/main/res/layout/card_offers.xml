@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/sponsor_logo"
                 app:civ_border_width="3dp"
-                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_color="@color/colorPrimaryText"
                 android:src="@drawable/faro_logo"
                 app:layout_constraintTop_toTopOf="parent" />
 

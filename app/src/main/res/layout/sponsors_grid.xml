@@ -11,4 +11,4 @@
     android:paddingRight="3dp"
     android:paddingLeft="3dp"
     android:paddingTop="5dp"
-    android:background="@color/softGray"/>
+    android:background="@color/colorPrimary"/>

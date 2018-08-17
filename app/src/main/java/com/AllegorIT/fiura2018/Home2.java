@@ -1,179 +1,176 @@
 package com.AllegorIT.fiura2018;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
-
 import java.util.ArrayList;
+import java.util.List;
+import yalantis.com.sidemenu.interfaces.Resourceble;
+import yalantis.com.sidemenu.model.SlideMenuItem;
 
-/**
- * Created by GIGAMOLE on 28.03.2016.
- */
-public class Home2 extends Activity {
-    private Activity activity;
+import com.AllegorIT.fiura2018.Lib.ViewAnimator;
+import com.AllegorIT.fiura2018.fragment.ContentFragment;
+
+
+public class Home2 extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private List<SlideMenuItem> list = new ArrayList<>();
+    private ViewAnimator viewAnimator;
+    private LinearLayout linearLayout;
+
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2);
-        initUI();
-        activity = this;
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
+        linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawers();
+            }
+        });
+        setActionBar();
+        createMenuList();
+        viewAnimator = new ViewAnimator<>(this, list,drawerLayout,this);
     }
 
-    private void initUI() {
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_vertical_ntb);
+    private void createMenuList() {
+        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.icn_close);
+        list.add(menuItem0);
+        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
+        list.add(menuItem);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
+        list.add(menuItem2);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.video);
+        list.add(menuItem3);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
+        list.add(menuItem4);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.BANDS, R.drawable.guitar);
+        list.add(menuItem5);
+        SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.SPONSORS, R.drawable.bookmark);
+        list.add(menuItem6);
+        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
+        list.add(menuItem7);
+        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.SOCIAL, R.drawable.share_red);
+        list.add(menuItem8);
+    }
 
+    @Override
+    public void onSwitch(Resourceble slideMenuItem, int position) {
+        Handler handler = new Handler();
+        Intent intent = null;
 
-        //final String[] colors = getResources().getStringArray(R.array.vertical_ntb);
+        Toast.makeText(getApplicationContext(),slideMenuItem.getName(),Toast.LENGTH_SHORT).show();
 
-        final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb_vertical);
-        final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.home),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .title("Home")
-                        .selectedIcon(getResources().getDrawable(R.drawable.home))
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.info2),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .selectedIcon(getResources().getDrawable(R.drawable.info2))
-                        .title("Info")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.video),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .selectedIcon(getResources().getDrawable(R.drawable.video))
-                        .title("Video")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.confe),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .selectedIcon(getResources().getDrawable(R.drawable.confe))
-                        .title("Speakers")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.guitar),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .selectedIcon(getResources().getDrawable(R.drawable.guitar))
-                        .title("Bands")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.bookmark),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .selectedIcon(getResources().getDrawable(R.drawable.bookmark))
-                        .title("Sponsors")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.sale),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .selectedIcon(getResources().getDrawable(R.drawable.sale))
-                        .title("Offers")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_share),
-                        Color.parseColor(getResources().getString(0+R.color.colorAccent)))
-                        .selectedIcon(getResources().getDrawable(R.drawable.ic_share))
-                        .title("SocialNets")
-                        .build()
-        );
+        if(slideMenuItem.getName().equals(ContentFragment.CLOSE)){}
+        else if(slideMenuItem.getName().equals(ContentFragment.SPEAKERS)){
+            intent = new Intent(getApplication(),SpeakerActivity.class);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){
+            intent = new Intent(getApplication(),OffersActivity.class);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.SPONSORS)){
+            intent = new Intent(getApplication(),SponsorsActivity.class);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.BANDS)){
+            intent = new Intent(getApplication(),BandActivity.class);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
+            intent = new Intent(getApplication(),YouTubeActivity.class);
+        }
+        else{
+            intent = new Intent(getApplication(),Home2.class);
+        }
 
-        viewPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return models.size();
-            }
-
-            @Override
-            public boolean isViewFromObject(final View view, final Object object) {
-                return view.equals(object);
-            }
-
-            @Override
-            public void destroyItem(final View container, final int position, final Object object) {
-                ((ViewPager) container).removeView((View) object);
-            }
-
-            @Override
-            public Object instantiateItem(final ViewGroup container, final int position) {
-                final View view;
-
-                switch (position){
-
-                    case 3:
-                        SpeakerList speakers = new SpeakerList(activity);
-                        view = speakers.getView();
-                        break;
-                    case 5:
-                        SponsorsGrid sponsorsGrid = new SponsorsGrid(activity);
-                        view = sponsorsGrid.getView();
-                        break;
-                    case 6:
-                        OffersList offersList = new OffersList(activity);
-                        view = offersList.getView();
-                        break;
-                    case 7:
-                        SocialNetObj socialNetObj = new SocialNetObj(activity);
-                        view = socialNetObj.getView();
-                        break;
-
-                    default:
-                        view = LayoutInflater.from(
-                                getBaseContext()).inflate(R.layout.item_vp2, null, false);
-                        final TextView txtPage = (TextView) view.findViewById(R.id.txt_vp_item_page);
-                        txtPage.setText("Page #"+position);
+        final Intent finalIntent = intent;
+        if(intent != null){
+            handler.postDelayed(new Runnable(){
+                @Override
+                public void run(){
+                    startActivity(finalIntent);
+                    overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
                 }
-                container.addView(view);
-                return view;
-            }
-        });
-        navigationTabBar.setModels(models);
-        navigationTabBar.setViewPager(viewPager, 0);
-        navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }, 800);
+        }
+    }
 
+
+
+    private void setActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                drawerLayout,         /* DrawerLayout object */
+                toolbar,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                linearLayout.removeAllViews();
+                linearLayout.invalidate();
             }
 
             @Override
-            public void onPageSelected(int position) {
-                if(position == 5){
-                    Toast.makeText(activity,"Toca un sponsor si quieres saber mas!!!",Toast.LENGTH_SHORT).show();
-                }
-                if(position==6){
-                    Toast.makeText(activity,"Toca una oferta si quieres saber mas!!!",Toast.LENGTH_SHORT).show();
-                }
-                if(position==7){
-                    Toast.makeText(activity,"Toca uno de los iconos para ir a nuestras redes sociales",Toast.LENGTH_SHORT).show();
-                }
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                if (slideOffset > 0.6 && linearLayout.getChildCount() == 0)
+                    viewAnimator.showMenuContent();
             }
-            @Override
-            public void onPageScrollStateChanged(int state) {}
-        });
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    @Override
+    public void disableHomeButton() {
+        getSupportActionBar().setHomeButtonEnabled(false);
+    }
+
+    @Override
+    public void enableHomeButton() {
+        getSupportActionBar().setHomeButtonEnabled(true);
+        drawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void addViewToContainer(View view) {
+        linearLayout.addView(view);
     }
 }
-
