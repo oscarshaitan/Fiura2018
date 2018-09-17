@@ -1,10 +1,15 @@
 package com.AllegorIT.fiura2018;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +27,9 @@ import yalantis.com.sidemenu.model.SlideMenuItem;
 
 import com.AllegorIT.fiura2018.Lib.ViewAnimator;
 import com.AllegorIT.fiura2018.fragment.ContentFragment;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
 
 
@@ -32,12 +40,17 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
     private ViewAnimator viewAnimator;
     private LinearLayout linearLayout;
     private GridView gv;
+    private boolean offline;
+    private Activity mContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sponsors);
+        Bundle bundle = getIntent().getExtras();
+        mContext = this;
+        offline = bundle.getBoolean("offline");
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
@@ -57,27 +70,47 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 SponsorObj s =(SponsorObj)adapterView.getItemAtPosition(i);
-                Intent intent = new Intent(getApplicationContext(), Map.class);
-                intent.putExtra("Title",s.getSponsor_name());
-                intent.putExtra("Latlang",s.getPos());
-                startActivity(intent);
-                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                Toast.makeText(getApplicationContext(),s.getSponsor_name(),Toast.LENGTH_SHORT).show();
             }
         });
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     public ArrayList<SponsorObj> getDataSet(){
-        SponsorObj sponsorObj = new SponsorObj(R.drawable.faro_logo, new LatLng(3.397863, -76.539862),"El Faro Pizzeria Limonar");
         ArrayList<SponsorObj> arrayList = new ArrayList<>();
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
-        arrayList.add(sponsorObj);
+        SponsorObj sponsorObj1 = new SponsorObj(R.drawable.la_fuente_soda, new LatLng(3.397863, -76.539862),"La Fuente de Soda");
+        SponsorObj sponsorObj2 = new SponsorObj(R.drawable.altavoz, new LatLng(3.397863, -76.539862),"Altavoz");
+        SponsorObj sponsorObj3 = new SponsorObj(R.drawable.agente_naranja, new LatLng(3.397863, -76.539862),"Agente Naranja");
+        SponsorObj sponsorObj4 = new SponsorObj(R.drawable.barloventus, new LatLng(3.397863, -76.539862),"Barloventus Bar");
+        SponsorObj sponsorObj5 = new SponsorObj(R.drawable.cali_tatto2, new LatLng(3.397863, -76.539862),"Cali Tatto");
+        SponsorObj sponsorObj6 = new SponsorObj(R.drawable.carpa_intolerancia, new LatLng(3.397863, -76.539862),"Carpa Intolerancia");
+        SponsorObj sponsorObj7 = new SponsorObj(R.drawable.lo_mundano, new LatLng(3.397863, -76.539862),"Lo mundano");
+        SponsorObj sponsorObj8 = new SponsorObj(R.drawable.logo_garra, new LatLng(3.397863, -76.539862),"Garra Producciones");
+        SponsorObj sponsorObj9 = new SponsorObj(R.drawable.nuestro_bar, new LatLng(3.397863, -76.539862),"Nuestro Bar");
+        SponsorObj sponsorObj10 = new SponsorObj(R.drawable.el_faro, new LatLng(3.397863, -76.539862),"El Faro Pizzeria Limonar");
+        SponsorObj sponsorObj11 = new SponsorObj(R.drawable.festivalfff, new LatLng(3.397863, -76.539862),"Festivalfff");
+        SponsorObj sponsorObj12 = new SponsorObj(R.drawable.ibague_c_r, new LatLng(3.397863, -76.539862),"Ibagué ciudad rock");
+        SponsorObj sponsorObj13 = new SponsorObj(R.drawable.indie_fest, new LatLng(3.397863, -76.539862),"Indie fest");
+        SponsorObj sponsorObj14 = new SponsorObj(R.drawable.rockopolis, new LatLng(3.397863, -76.539862),"Rockopolis");
+        SponsorObj sponsorObj15 = new SponsorObj(R.drawable.ev_backline, new LatLng(3.397863, -76.539862),"ev backline");
+        SponsorObj sponsorObj16 = new SponsorObj(R.drawable.blue_hell, new LatLng(3.397863, -76.539862),"Blue Hell");
+
+        arrayList.add(sponsorObj1);
+        arrayList.add(sponsorObj2);
+        arrayList.add(sponsorObj3);
+        arrayList.add(sponsorObj4);
+        arrayList.add(sponsorObj5);
+        arrayList.add(sponsorObj6);
+        arrayList.add(sponsorObj7);
+        arrayList.add(sponsorObj8);
+        arrayList.add(sponsorObj9);
+        arrayList.add(sponsorObj10);
+        arrayList.add(sponsorObj11);
+        arrayList.add(sponsorObj12);
+        arrayList.add(sponsorObj13);
+        arrayList.add(sponsorObj14);
+        arrayList.add(sponsorObj15);
+        arrayList.add(sponsorObj16);
         return arrayList;
     }
 
@@ -136,7 +169,7 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
         list.add(menuItem);
         SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.video);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
         list.add(menuItem4);
@@ -144,41 +177,132 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
         list.add(menuItem5);
         SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.SPONSORS, R.drawable.bookmark);
         list.add(menuItem6);
-        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
-        list.add(menuItem7);
-        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.SOCIAL, R.drawable.share_red);
+        if(offline){
+            SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale_off);
+            list.add(menuItem7);
+        }
+        else{
+            SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
+            list.add(menuItem7);
+        }
+
+
+        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
+        SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MESSENGER, R.drawable.messenger);
+        list.add(menuItem9);
+        SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.INSTAGRAM, R.drawable.instagram);
+        list.add(menuItem10);
+        SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.TWITTER, R.drawable.twitter);
+        list.add(menuItem11);
+        SlideMenuItem menuItem12 = new SlideMenuItem(ContentFragment.LOGOUT, R.drawable.logout);
+        list.add(menuItem12);
     }
 
     @Override
     public void onSwitch(Resourceble slideMenuItem, int position) {
         Handler handler = new Handler();
-        Intent intent = null;
-
-        Toast.makeText(getApplicationContext(),slideMenuItem.getName(),Toast.LENGTH_SHORT).show();
+        final Intent[] intent = {null};
 
         if(slideMenuItem.getName().equals(ContentFragment.CLOSE)){}
         else if(slideMenuItem.getName().equals(ContentFragment.SPEAKERS)){
-            intent = new Intent(getApplication(),SpeakerActivity.class);
+            intent[0] = new Intent(getApplication(),SpeakerActivity.class);
+            intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){
-            intent = new Intent(getApplication(),OffersActivity.class);
+            if(offline){
+                Toast.makeText(this,"You must be login to get the offers!!!",Toast.LENGTH_LONG).show();
+            }
+            else {
+                intent[0] = new Intent(getApplication(),OffersActivity.class);
+                intent[0].putExtra("offline", offline);
+            }
+
         }
         else if(slideMenuItem.getName().equals(ContentFragment.SPONSORS)){
-            intent = new Intent(getApplication(),SponsorsActivity.class);
+            intent[0] = new Intent(getApplication(),SponsorsActivity.class);
+            intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.BANDS)){
-            intent = new Intent(getApplication(),BandActivity.class);
+            intent[0] = new Intent(getApplication(),BandActivity.class);
+            intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
-            intent = new Intent(getApplication(),YouTubeActivity.class);
+            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
+            intent[0].putExtra("offline", offline);
         }
-        else{
-            intent = new Intent(getApplication(),Home2.class);
+        else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
+            try{
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/807003995983852/")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }catch (Exception e){
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/unirock.alternativo/")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
+        }
+        else if (slideMenuItem.getName().equals(ContentFragment.MESSENGER)) {
+            try{
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/807003995983852/")));
+            }catch (Exception e){
+                try{
+                    Toast.makeText(getApplicationContext(),"Need Messenger installed to do that!!!!",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.facebook.orca")));
+                    overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                }
+                catch (Exception e2){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + "com.facebook.orca")));
+                    overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                }
+            }
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.TWITTER)){
+            try {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("twitter://user?user_id=2288881418"));
+                startActivity(intent2);
+            } catch (Exception e) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://twitter.com/FiuraCali")));
+            }
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.INSTAGRAM)){
+            Uri uri = Uri.parse("http://instagram.com/_u/fiuracali");
+            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+            likeIng.setPackage("com.instagram.android");
+
+            try {
+                startActivity(likeIng);
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.instagram.com/fiuracali/")));
+            }
+        }
+        else if (slideMenuItem.getName().equals(ContentFragment.LOGOUT)) {
+            new MaterialDialog.Builder(mContext)
+                    .title("Logout")
+                    .content("Sure you wanna logout?")
+                    .positiveText("Continue")
+                    .negativeText("Cancel")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            LoginManager.getInstance().logOut();
+                            intent[0] = new Intent(getApplication(), Login.class);
+                            startActivity(intent[0]);
+                            overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                        }
+                    })
+                    .show();
         }
 
-        final Intent finalIntent = intent;
-        if(intent != null){
+        else{
+            intent[0] = new Intent(getApplication(),Home2.class);
+            intent[0].putExtra("offline", offline);
+        }
+
+        final Intent finalIntent = intent[0];
+        if(intent[0] != null){
             handler.postDelayed(new Runnable(){
                 @Override
                 public void run(){

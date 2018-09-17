@@ -3,6 +3,7 @@ package com.AllegorIT.fiura2018;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.app.ProgressDialog;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -134,6 +135,9 @@ public class YouTubeRecyclerViewFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.youtube_recycler_view_fragment, container, false);
+
+        Spinner s = (Spinner)rootView.findViewById(R.id.youtube_playlist_spinner);
+        s.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.youtube_recycler_view);
         // use this setting to improve performance if you know that changes

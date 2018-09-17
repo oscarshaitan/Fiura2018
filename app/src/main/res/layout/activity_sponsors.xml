@@ -28,14 +28,14 @@
                 android:id="@+id/grid_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:numColumns="2"
+                android:numColumns="3"
                 android:scrollbarStyle="insideOverlay"
                 android:scrollbars="none"
                 android:listSelector="@null"
                 android:paddingRight="3dp"
                 android:paddingLeft="3dp"
                 android:paddingTop="5dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/colorPrimaryText"/>
         </LinearLayout>
 
         <android.support.v7.widget.Toolbar

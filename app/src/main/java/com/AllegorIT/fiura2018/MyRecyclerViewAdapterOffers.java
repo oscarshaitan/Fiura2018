@@ -32,29 +32,30 @@ public class MyRecyclerViewAdapterOffers extends RecyclerView
 
     @NonNull
     @Override
-    public MyRecyclerViewAdapterOffers.DataObjectHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DataObjectHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_offers, parent, false);
 
-        MyRecyclerViewAdapterOffers.DataObjectHolder dataObjectHolder = new MyRecyclerViewAdapterOffers.DataObjectHolder(view);
+        DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyRecyclerViewAdapterOffers.DataObjectHolder holder, final int position) {
-        holder.idImgSpo = mDataset.get(position).getOffers_sponsor();
-        Picasso.get()
-                .load(holder.idImgSpo)
+    public void onBindViewHolder(@NonNull DataObjectHolder holder, final int position) {
+
+        holder.promo.setImageDrawable(activity.getResources().getDrawable(mDataset.get(position).getOffers_img()));
+
+       /* Picasso.get()
+                .load(mDataset.get(position).getOffers_sponsor())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.sponsor_logo);
 
-        holder.idImgPro = mDataset.get(position).getOffers_img();
         Picasso.get()
-                .load(holder.idImgPro)
+                .load(mDataset.get(position).getOffers_img())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
-                .into(holder.promo);
+                .into(holder.promo);*/
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +84,7 @@ public class MyRecyclerViewAdapterOffers extends RecyclerView
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-            sponsor_logo = (ImageView) itemView.findViewById(R.id.sponsor_logo);
+            //sponsor_logo = (ImageView) itemView.findViewById(R.id.sponsor_logo);
             card = (ConstraintLayout) itemView.findViewById(R.id.card_offer);
             promo = (ImageView) itemView.findViewById(R.id.promo);
         }

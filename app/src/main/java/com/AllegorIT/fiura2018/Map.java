@@ -1,10 +1,15 @@
 package com.AllegorIT.fiura2018;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +22,9 @@ import android.widget.Toast;
 
 import com.AllegorIT.fiura2018.Lib.ViewAnimator;
 import com.AllegorIT.fiura2018.fragment.ContentFragment;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,6 +48,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
     private List<SlideMenuItem> list = new ArrayList<>();
     private ViewAnimator viewAnimator;
     private LinearLayout linearLayout;
+    private boolean offline;
+    private Activity mContext;
 
 
 
@@ -51,7 +61,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
         schedule = bundle.getString("Schedule");
         place = bundle.getString("Place");
         pos = (LatLng) bundle.getParcelable("Latlang");
-
+        offline = bundle.getBoolean("offline");
+        mContext = this;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
@@ -72,6 +83,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     private void createMenuList() {
@@ -79,9 +91,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.drawable.info2);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.video);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
         list.add(menuItem4);
@@ -89,10 +101,26 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
         list.add(menuItem5);
         SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.SPONSORS, R.drawable.bookmark);
         list.add(menuItem6);
-        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
-        list.add(menuItem7);
-        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.share_red);
+        if(offline){
+            SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale_off);
+            list.add(menuItem7);
+        }
+        else{
+            SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
+            list.add(menuItem7);
+        }
+
+
+        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
+        SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MESSENGER, R.drawable.messenger);
+        list.add(menuItem9);
+        SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.INSTAGRAM, R.drawable.instagram);
+        list.add(menuItem10);
+        SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.TWITTER, R.drawable.twitter);
+        list.add(menuItem11);
+        SlideMenuItem menuItem12 = new SlideMenuItem(ContentFragment.LOGOUT, R.drawable.logout);
+        list.add(menuItem12);
     }
 
 
@@ -197,59 +225,113 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
     @Override
     public void onSwitch(Resourceble slideMenuItem, int position) {
         Handler handler = new Handler();
-        Toast.makeText(getApplicationContext(),slideMenuItem.getName(),Toast.LENGTH_SHORT).show();
-        switch (slideMenuItem.getName()) {
-            case ContentFragment.CLOSE:
+        final Intent[] intent = {null};
 
-                Toast.makeText(getApplicationContext(),"close",Toast.LENGTH_SHORT).show();
-                break;
-            case ContentFragment.SPEAKERS:
+        if(slideMenuItem.getName().equals(ContentFragment.CLOSE)){}
+        else if(slideMenuItem.getName().equals(ContentFragment.SPEAKERS)){
+            intent[0] = new Intent(getApplication(),SpeakerActivity.class);
+            intent[0].putExtra("offline", offline);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){
+            if(offline){
+                Toast.makeText(this,"You must be login to get the offers!!!",Toast.LENGTH_LONG).show();
+            }
+            else {
+                intent[0] = new Intent(getApplication(),OffersActivity.class);
+                intent[0].putExtra("offline", offline);
+            }
 
-                Toast.makeText(getApplicationContext(),"speakers",Toast.LENGTH_SHORT).show();
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.SPONSORS)){
+            intent[0] = new Intent(getApplication(),SponsorsActivity.class);
+            intent[0].putExtra("offline", offline);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.BANDS)){
+            intent[0] = new Intent(getApplication(),BandActivity.class);
+            intent[0].putExtra("offline", offline);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
+            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
+            intent[0].putExtra("offline", offline);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
+            try{
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/807003995983852/")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }catch (Exception e){
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/unirock.alternativo/")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
+        }
+        else if (slideMenuItem.getName().equals(ContentFragment.MESSENGER)) {
+            try{
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/807003995983852/")));
+            }catch (Exception e){
+                try{
+                    Toast.makeText(getApplicationContext(),"Need Messenger installed to do that!!!!",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.facebook.orca")));
+                    overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                }
+                catch (Exception e2){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + "com.facebook.orca")));
+                    overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                }
+            }
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.TWITTER)){
+            try {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("twitter://user?user_id=2288881418"));
+                startActivity(intent2);
+            } catch (Exception e) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://twitter.com/FiuraCali")));
+            }
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.INSTAGRAM)){
+            Uri uri = Uri.parse("http://instagram.com/_u/fiuracali");
+            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 
-                handler.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        Intent intent = new Intent(getApplication(),SpeakerActivity.class);
-                        startActivity(intent);
-                    }
-                }, 800);
-                break;
-            case ContentFragment.OFFERS:
+            likeIng.setPackage("com.instagram.android");
 
-                Toast.makeText(getApplicationContext(),"speakers",Toast.LENGTH_SHORT).show();
+            try {
+                startActivity(likeIng);
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.instagram.com/fiuracali/")));
+            }
+        }
+        else if (slideMenuItem.getName().equals(ContentFragment.LOGOUT)) {
+            new MaterialDialog.Builder(mContext)
+                    .title("Logout")
+                    .content("Sure you wanna logout?")
+                    .positiveText("Continue")
+                    .negativeText("Cancel")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            LoginManager.getInstance().logOut();
+                            intent[0] = new Intent(getApplication(), Login.class);
+                            startActivity(intent[0]);
+                            overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                        }
+                    })
+                    .show();
+        }
+        else{
+            intent[0] = new Intent(getApplication(),Home2.class);
+            intent[0].putExtra("offline", offline);
+        }
 
-                handler.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        Intent intent = new Intent(getApplication(),OffersActivity.class);
-                        startActivity(intent);
-                    }
-                }, 800);
-                break;
-
-            case ContentFragment.SPONSORS:
-
-                Toast.makeText(getApplicationContext(),"SPONSORS",Toast.LENGTH_SHORT).show();
-
-                handler.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        Intent intent = new Intent(getApplication(),SponsorsActivity.class);
-                        startActivity(intent);
-                    }
-                }, 800);
-                break;
-            default:
-
-                handler.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        Intent intent = new Intent(getApplication(),Home2.class);
-                        startActivity(intent);
-                    }
-                }, 800);
-                break;
+        final Intent finalIntent = intent[0];
+        if(intent[0] != null){
+            handler.postDelayed(new Runnable(){
+                @Override
+                public void run(){
+                    startActivity(finalIntent);
+                    overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                }
+            }, 800);
         }
     }
 }

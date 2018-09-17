@@ -15,7 +15,7 @@
             android:title="Information" />
         <item
             android:id="@+id/video"
-            android:icon="@drawable/video"
+            android:icon="@drawable/youtube"
             android:title="Video" />
         <item
             android:id="@+id/speakers"
@@ -33,35 +33,25 @@
             android:id="@+id/sales"
             android:icon="@drawable/sale"
             android:title="Offers" />
+        <item
+            android:id="@+id/fb"
+            android:icon="@drawable/fb"
+            android:title="Facebook"
+            app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/msn"
+            android:icon="@drawable/messenger"
+            android:title="Messenger"
+            app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/insta"
+            android:icon="@drawable/instagram"
+            android:title="Instagram"
+            app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/twitter"
+            android:icon="@drawable/twitter"
+            android:title="Twitter"
+            app:showAsAction="ifRoom"/>
     </group>
-    <item
-        android:title="Social Networks" >
-        <menu>
-            <item
-                android:id="@+id/fb"
-                android:icon="@drawable/fb"
-                android:title="Facebook"
-                app:showAsAction="ifRoom"/>
-            <item
-                android:id="@+id/msn"
-                android:icon="@drawable/messenger"
-                android:title="Messenger"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/youtube"
-                android:icon="@drawable/youtube"
-                android:title="Youtube"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/insta"
-                android:icon="@drawable/instagram"
-                android:title="Instagram"
-                app:showAsAction="ifRoom"/>
-            <item
-                android:id="@+id/twitter"
-                android:icon="@drawable/twitter"
-                android:title="Twitter"
-                app:showAsAction="ifRoom"/>
-        </menu>
-    </item>
 </menu>

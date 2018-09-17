@@ -68,29 +68,17 @@ public class MyRecyclerViewAdapterBands extends RecyclerView
                             .error(R.drawable.redcircle)
                             .into(holder.pos);
                     holder.superLay.setVisibility(View.GONE);
-                    Intent intent = new Intent(activity, Map.class);
-                    intent.putExtra("Band",mDataset.get(position).getBandName());
-                    intent.putExtra("Schedule",mDataset.get(position).getSchedule());
-                    intent.putExtra("Place",mDataset.get(position).getPlace());
-                    intent.putExtra("Latlang",mDataset.get(position).getLatLng());
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
-                    holder.flag = !holder.flag;
-
                 }
                 else {
                     Picasso.get()
-                            .load(R.drawable.circlemarker)
+                            .load(R.drawable.circleminus)
                             .placeholder(R.drawable.redcircle)
                             .error(R.drawable.redcircle)
                             .into(holder.pos);
 
                     holder.superLay.setVisibility(View.VISIBLE);
-                    holder.flag = !holder.flag;
                 }
-
-
-
+                holder.flag = !holder.flag;
             }
         });
     }

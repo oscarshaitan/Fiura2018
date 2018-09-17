@@ -1,8 +1,10 @@
 package com.AllegorIT.fiura2018;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -11,14 +13,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -47,12 +55,15 @@ import java.util.Arrays;
 public class Login extends AppCompatActivity {
     CallbackManager callbackManager;
     private VideoView myVideoView;
+    private TextView offline_login;
+    private Activity mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_login);
-        haskey();
+        //haskey();
         int PERMISSION_ALL = 1;
         String[] PERMISSIONS = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.ACCESS_COARSE_LOCATION};
 
@@ -64,13 +75,39 @@ public class Login extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
         final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        offline_login = (TextView) findViewById(R.id.offline_login);
+
+        offline_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder(mContext)
+                        .title("Offline Login")
+                        .content("WIthout FB login you cant use the especial gift for you")
+                        .positiveText("Continue")
+                        .negativeText("Cancel")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                Intent intent = new Intent(mContext,Home2.class);
+                                intent.putExtra("offline", true);
+                                startActivity(intent);
+                                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+                            }
+                        })
+                        .show();
+            }
+        });
         final boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         //haskey();
+        final TextView skip = (TextView)findViewById(R.id.skip);
         if(isLoggedIn){
             loginButton.setVisibility(View.INVISIBLE);
+            offline_login.setVisibility(View.INVISIBLE);
+            skip.setVisibility(View.VISIBLE);
         }else {
             loginButton.setVisibility(View.VISIBLE);
+            offline_login.setVisibility(View.VISIBLE);
         }
 
 
@@ -94,25 +131,38 @@ public class Login extends AppCompatActivity {
 
         myVideoView = (VideoView)findViewById(R.id.video);
 
+        //myVideoView.stopPlayback();
+
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myVideoView.stopPlayback();
+                if(isLoggedIn)retry();
+            }
+        });
+
         try {
 
-            myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.fiura_logo_anim));
+            myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.home));
             myVideoView.start();
 
             myVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     if (isLoggedIn) {
+                        skip.setVisibility(View.VISIBLE);
                         retry();
                     } else {
                         loginButton.setVisibility(View.VISIBLE);
-                        mp.start();
+                        offline_login.setVisibility(View.VISIBLE);
                     }
                 }
             });
         }catch (Exception e){
             e.getStackTrace();
         }
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     private void retry(){
@@ -121,7 +171,6 @@ public class Login extends AppCompatActivity {
             graphFBData(accessToken);
         }
         else {
-
             Toast.makeText(getApplicationContext(),"No Internet Connection Detected",Toast.LENGTH_LONG).show();
         }
     }
@@ -141,6 +190,7 @@ public class Login extends AppCompatActivity {
             URL profile_picture = new URL("https://graph.facebook.com/"+object.getString("id")+"/picture?width=50&heigth=50");
             String Name = object.getString("name");
             Intent intent = new Intent(this,Home2.class);
+            intent.putExtra("offline", "false");
             startActivity(intent);
             overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
         } catch (MalformedURLException e) {
