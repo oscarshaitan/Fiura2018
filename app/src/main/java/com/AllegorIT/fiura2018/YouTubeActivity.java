@@ -164,8 +164,6 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
-        list.add(menuItem2);
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
@@ -183,7 +181,8 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
             list.add(menuItem7);
         }
 
-
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
+        list.add(menuItem2);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MESSENGER, R.drawable.messenger);
@@ -206,9 +205,13 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
             intent[0] = new Intent(getApplication(),SpeakerActivity.class);
             intent[0].putExtra("offline", offline);
         }
+        else if(slideMenuItem.getName().equals(ContentFragment.INFO)){
+            intent[0] = new Intent(getApplication(),Info.class);
+            intent[0].putExtra("offline", offline);
+        }
         else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){
             if(offline){
-                Toast.makeText(this,"You must be login to get the offers!!!",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.log_to_offer,Toast.LENGTH_LONG).show();
             }
             else {
                 intent[0] = new Intent(getApplication(),OffersActivity.class);
@@ -242,7 +245,7 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/807003995983852/")));
             }catch (Exception e){
                 try{
-                    Toast.makeText(getApplicationContext(),"Need Messenger installed to do that!!!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.need_msn,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.facebook.orca")));
                     overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
                 }
@@ -275,13 +278,12 @@ public class YouTubeActivity extends AppCompatActivity implements ViewAnimator.V
                         Uri.parse("https://www.instagram.com/fiuracali/")));
             }
         }
-
         else if (slideMenuItem.getName().equals(ContentFragment.LOGOUT)) {
             new MaterialDialog.Builder(mContext)
                     .title("Logout")
-                    .content("Sure you wanna logout?")
-                    .positiveText("Continue")
-                    .negativeText("Cancel")
+                    .content(R.string.sure_logout)
+                    .positiveText(R.string.continue_btn)
+                    .negativeText(R.string.cancel_btn)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

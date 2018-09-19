@@ -22,12 +22,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="53dp">
+            android:layout_marginTop="53dp"
+            android:background="@color/black">
 
-           <TextView
+           <ImageView
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:text="INFO CON MARIO"/>
+               android:src="@drawable/home_pic"/>
         </LinearLayout>
 
         <android.support.v7.widget.Toolbar

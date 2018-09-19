@@ -57,9 +57,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
     protected void onCreate(Bundle savedInstanceState) {
         Bundle bundle = getIntent().getExtras();
         title = bundle.getString("Title");
-        spkeakerName = bundle.getString("Speaker");
-        schedule = bundle.getString("Schedule");
-        place = bundle.getString("Place");
+        spkeakerName = bundle.getString(getString(R.string.speaker));
+        schedule = bundle.getString(getString(R.string.schedule));
+        place = bundle.getString(getString(R.string.place));
         pos = (LatLng) bundle.getParcelable("Latlang");
         offline = bundle.getBoolean("offline");
         mContext = this;
@@ -91,8 +91,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
-        list.add(menuItem2);
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
@@ -110,7 +108,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
             list.add(menuItem7);
         }
 
-
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
+        list.add(menuItem2);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MESSENGER, R.drawable.messenger);
@@ -230,6 +229,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, ViewAn
         if(slideMenuItem.getName().equals(ContentFragment.CLOSE)){}
         else if(slideMenuItem.getName().equals(ContentFragment.SPEAKERS)){
             intent[0] = new Intent(getApplication(),SpeakerActivity.class);
+            intent[0].putExtra("offline", offline);
+        }
+        else if(slideMenuItem.getName().equals(ContentFragment.INFO)){
+            intent[0] = new Intent(getApplication(),Info.class);
             intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){

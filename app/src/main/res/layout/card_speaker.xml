@@ -15,7 +15,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="281dp"
+        android:layout_height="290dp"
         android:layout_centerVertical="true"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="10dp"
@@ -30,7 +30,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
@@ -65,7 +65,8 @@
             android:id="@+id/conf_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vocal Vocalisimo Vocales"
+            android:text="Qué hacer para \n hacer parte de un festival."
+            android:textAlignment="center"
             android:textColor="@color/colorPrimary" />
 
         <TextView
@@ -73,8 +74,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Vocales en vocalisis"
+            android:textAlignment="center"
             android:textColor="@color/colorPrimary"
-            android:textSize="8dp" />
+            android:textSize="13dp" />
 
         <TextView
             android:id="@+id/descript"
@@ -93,19 +95,8 @@
             android:layout_marginTop="2dp"
             android:text="Viernes 20 15:30 Auditorio 2"
             android:textColor="@color/colorAccent"
+            android:textAlignment="center"
             android:textSize="10dp" />
-
-        <ImageButton
-            android:id="@+id/pos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/oval"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:src="@drawable/markerblue" />
-
-
     </LinearLayout>
 
     <RelativeLayout
@@ -131,7 +122,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/vertical_photo_profile2"
+                android:src="@drawable/jose_m"
                 app:layout_constraintStart_toStartOf="@+id/relativeLayout"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.v7.widget.CardView>

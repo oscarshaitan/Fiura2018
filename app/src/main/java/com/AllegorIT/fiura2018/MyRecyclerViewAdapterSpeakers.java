@@ -42,7 +42,7 @@ public class MyRecyclerViewAdapterSpeakers extends RecyclerView
     public void onBindViewHolder(@NonNull DataObjectHolder holder, final int position) {
         holder.title.setText(mDataset.get(position).getTitle());
         holder.descript.setText(mDataset.get(position).getDescrip());
-        holder.schedule.setText(mDataset.get(position).getSchedule()+" "+mDataset.get(position).getPlace());
+        holder.schedule.setText(mDataset.get(position).getSchedule()+"\n "+mDataset.get(position).getPlace());
         holder.speakerName.setText(mDataset.get(position).getSpeakerName());
         holder.rol.setText(mDataset.get(position).getRol());
         holder.idImg = mDataset.get(position).getSpeakerImg();
@@ -52,7 +52,7 @@ public class MyRecyclerViewAdapterSpeakers extends RecyclerView
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.speakerImg);
 
-        holder.pos.setOnClickListener(new View.OnClickListener() {
+       /* holder.pos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, Map.class);
@@ -64,7 +64,7 @@ public class MyRecyclerViewAdapterSpeakers extends RecyclerView
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
             }
-        });
+        });*/
     }
 
     @Override

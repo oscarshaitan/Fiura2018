@@ -81,10 +81,10 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new MaterialDialog.Builder(mContext)
-                        .title("Offline Login")
-                        .content("WIthout FB login you cant use the especial gift for you")
-                        .positiveText("Continue")
-                        .negativeText("Cancel")
+                        .title(R.string.offline_title)
+                        .content(R.string.offline_txt)
+                        .positiveText(R.string.continue_btn)
+                        .negativeText(R.string.cancel_btn)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -121,12 +121,9 @@ public class Login extends AppCompatActivity {
                 graphFBData(loginResult.getAccessToken());
             }
             @Override
-            public void onCancel() {
-                System.out.println("login con fb cancel");
-            }
+            public void onCancel() {}
             @Override
-            public void onError(FacebookException error) {
-            }
+            public void onError(FacebookException error) {}
         });
 
         myVideoView = (VideoView)findViewById(R.id.video);
@@ -171,7 +168,7 @@ public class Login extends AppCompatActivity {
             graphFBData(accessToken);
         }
         else {
-            Toast.makeText(getApplicationContext(),"No Internet Connection Detected",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.no_cnx,Toast.LENGTH_LONG).show();
         }
     }
 

@@ -75,12 +75,21 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
 
     private ArrayList<OffersObj> getDataSet() {
         ArrayList<OffersObj> arrayList = new ArrayList<>();
-        OffersObj offersObj = new OffersObj(R.drawable.la_fuente_promo,R.drawable.la_fuente_soda, new LatLng(3.4709375,-76.5270671),"La fuente de soda");
-        OffersObj offersObj2 = new OffersObj(R.drawable.bandphoto_promo,R.drawable.barloventus, new LatLng(3.4853537,-76.5033645),"Barloventus");
-        arrayList.add(offersObj);
+
+        OffersObj offersObj1 = new OffersObj(R.drawable.zona_t,R.drawable.fiura_logo, new LatLng(3.4853537,-76.5033645),"Tu zona ticket y FIURA");
+        OffersObj offersObj2 = new OffersObj(R.drawable.la_fuente_promo,R.drawable.la_fuente_soda, new LatLng(3.4709375,-76.5270671),"La fuente de soda");
+        OffersObj offersObj3 = new OffersObj(R.drawable.blue_promo,R.drawable.blue_hell, new LatLng(3.4709375,-76.5270671),"BlueHell");
+        OffersObj offersObj4 = new OffersObj(R.drawable.bandphoto_promo,R.drawable.barloventus, new LatLng(3.4853537,-76.5033645),"Barloventus");
+        OffersObj offersObj5 = new OffersObj(R.drawable.nuestrobar_promo,R.drawable.nuestro_bar, new LatLng(3.4709375,-76.5270671),"Nuestro Bar");
+        OffersObj offersObj6 = new OffersObj(R.drawable.fmb_promo,R.drawable.madame_b, new LatLng(3.4709375,-76.5270671),"Fundación Madame Blue");
+        OffersObj offersObj7 = new OffersObj(R.drawable.amor_fe,R.drawable.amor_fe_logo, new LatLng(3.4853537,-76.5033645),"Amor y fe");
+        arrayList.add(offersObj1);
         arrayList.add(offersObj2);
-        arrayList.add(offersObj);
-        arrayList.add(offersObj2);
+        arrayList.add(offersObj3);
+        arrayList.add(offersObj4);
+        arrayList.add(offersObj5);
+        arrayList.add(offersObj6);
+        arrayList.add(offersObj7);
         return arrayList;
     }
 
@@ -140,8 +149,6 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
-        list.add(menuItem2);
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
@@ -158,7 +165,8 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
             SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
             list.add(menuItem7);
         }
-
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
+        list.add(menuItem2);
 
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
@@ -182,9 +190,13 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
             intent[0] = new Intent(getApplication(),SpeakerActivity.class);
             intent[0].putExtra("offline", offline);
         }
+        else if(slideMenuItem.getName().equals(ContentFragment.INFO)){
+            intent[0] = new Intent(getApplication(),Info.class);
+            intent[0].putExtra("offline", offline);
+        }
         else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){
             if(offline){
-                Toast.makeText(this,"You must be login to get the offers!!!",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.log_to_offer,Toast.LENGTH_LONG).show();
             }
             else {
                 intent[0] = new Intent(getApplication(),OffersActivity.class);
@@ -218,7 +230,7 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/807003995983852/")));
             }catch (Exception e){
                 try{
-                    Toast.makeText(getApplicationContext(),"Need Messenger installed to do that!!!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.need_msn,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.facebook.orca")));
                     overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
                 }
@@ -254,9 +266,9 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
         else if (slideMenuItem.getName().equals(ContentFragment.LOGOUT)) {
             new MaterialDialog.Builder(mContext)
                     .title("Logout")
-                    .content("Sure you wanna logout?")
-                    .positiveText("Continue")
-                    .negativeText("Cancel")
+                    .content(R.string.sure_logout)
+                    .positiveText(R.string.continue_btn)
+                    .negativeText(R.string.cancel_btn)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

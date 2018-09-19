@@ -60,11 +60,7 @@ public class MyRecyclerViewAdapterOffers extends RecyclerView
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, Map.class);
-                intent.putExtra("Title",mDataset.get(position).getSponsor_name());
-                intent.putExtra("Latlang",mDataset.get(position).getPos());
-                activity.startActivity(intent);
-                activity.overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+
             }
         });
 

@@ -130,8 +130,6 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
-        list.add(menuItem2);
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
@@ -149,7 +147,8 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
             list.add(menuItem7);
         }
 
-
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
+        list.add(menuItem2);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MESSENGER, R.drawable.messenger);
@@ -172,9 +171,13 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
             intent[0] = new Intent(getApplication(),SpeakerActivity.class);
             intent[0].putExtra("offline", offline);
         }
+        else if(slideMenuItem.getName().equals(ContentFragment.INFO)){
+            intent[0] = new Intent(getApplication(),Info.class);
+            intent[0].putExtra("offline", offline);
+        }
         else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){
             if(offline){
-                Toast.makeText(this,"You must be login to get the offers!!!",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.log_to_offer,Toast.LENGTH_LONG).show();
             }
             else {
                 intent[0] = new Intent(getApplication(),OffersActivity.class);
@@ -208,7 +211,7 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/807003995983852/")));
             }catch (Exception e){
                 try{
-                    Toast.makeText(getApplicationContext(),"Need Messenger installed to do that!!!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.need_msn,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.facebook.orca")));
                     overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
                 }
@@ -244,9 +247,9 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
         else if (slideMenuItem.getName().equals(ContentFragment.LOGOUT)) {
             new MaterialDialog.Builder(mContext)
                     .title("Logout")
-                    .content("Sure you wanna logout?")
-                    .positiveText("Continue")
-                    .negativeText("Cancel")
+                    .content(R.string.sure_logout)
+                    .positiveText(R.string.continue_btn)
+                    .negativeText(R.string.cancel_btn)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -295,16 +298,33 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
     private ArrayList<ConferenceObj> getDataSet() {
         ArrayList<ConferenceObj> arrayList = new ArrayList<>();
         LatLng latLng = new LatLng(3.4360427,-76.5258297);
-        ConferenceObj conferenceObj = new ConferenceObj(R.drawable.vertical_photo_profile,"Creación de Bandas",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis arcu vitae neque consequat rhoncus. Sed hendrerit felis maximus ante bibendum porttitor. Vestibulum dignissim orci in sodales facilisis. In elit nisl, tempus in lectus id, elementum luctus ante. Nulla facilisi. Vestibulum vel libero dictum",
-                "Auditorio 5","15/09/2018 15:30","Pedro Perez", "VOCAL",latLng);
-        ConferenceObj conferenceObj2 = new ConferenceObj(R.drawable.vertical_photo_profile2,"Creación de Bandas",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis arcu vitae neque consequat rhoncus. Sed hendrerit felis maximus ante bibendum porttitor. Vestibulum dignissim orci in sodales facilisis. In elit nisl, tempus in lectus id, elementum luctus ante. Nulla facilisi. Vestibulum vel libero dictum",
-                "Auditorio 5","15/09/2018 15:30","Pedro Perez", "VOCAL",latLng);
+        ConferenceObj conferenceObj = new ConferenceObj(R.drawable.jose_m,"Qué hacer para hacer \n parte de un festival.",
+                "Antropólogo de profesión, ha sido Investigador, Profesor, Programador, Locutor, Guionista y Productor de Radio y Televisión. Articulista, integrante de San Pascualito Rey, La Sabrosa Sabrosura y Puerquerama. Jefe del Departamento de Actividades Culturales y Artísticas de la Dirección de Cultura del Ayuntamiento de Metepec.",
+                "Biblioteca Mario Carvajal","--/--/2018 --:--","José Antonio \nMartínez Ramírez", "Programador, Productor \n y Gestor Cultural",latLng);
+
+        ConferenceObj conferenceObj2 = new ConferenceObj(R.drawable.paola_g,"Industrias creativas \ny la música",
+                "Co - Fundadora de la agencia de prensa y PR Garra Producciones. Jefe de prensa y PR de Doctor Krápula, ha manejado el Booking y Management de agrupaciones como Koyi k Utho, entre otras. Tourmanager y Jefe de prensa de como Panteón Rococó, entre otras. Participa  en mercados culturales Circulart, Bomm, Mama Event y Womex.",
+                "Biblioteca Mario Carvajal","--/--/2018 --:--","Ana María Uribe", "Realizadora Audiovisual",latLng);
+
+
+        ConferenceObj conferenceObj3 = new ConferenceObj(R.drawable.harold_p,"Conversatorio de \ncrónica y rock",
+                "Comunicador Social y Periodista Cultural egresado de la Univalle. \n" +
+                        "Reportero free lance del Periódico Cultural La Palabra. Univalle. Cronista, radialista, documentalista y fanzinero. Beca de Literatura de la convocatoria Estímulos otorgado por la Secretaría de Cultura, Cali, 2017, con el \n" +
+                        "\" libro Krónicas ambulantes.\"",
+                "Biblioteca Mario Carvajal","--/--/2018 --:--","Harold Pardey", "Comunicador social",latLng);
+
+        ConferenceObj conferenceObj4 = new ConferenceObj(R.drawable.robinson_d,"Producir desde \nla construcción ",
+                "1998 Trabajos en öpna canalen (Suecia), 2000-2005 trabajo en construcción, 2005 Diplomado en Comunicación, 2007 creación empresa de audio, 2009 construcción de estudios crearock, 2010-2015 instalaciónes en Expo Changai 2010 y Expo Milan 2015, 2016 instalaciones en Royal Caribbean, 2017 tallerista para diplomado en Alemania",
+                "Biblioteca Mario Carvajal","--/--/2018 --:--","Robinson Delgado Ramírez", "Técnico audiovisual",latLng);
+
+        ConferenceObj conferenceObj5 = new ConferenceObj(R.drawable.johana_s,"Estrategias para ser un \nmusico independiente \ny no desfallecer \nen el intento",
+                "Director del Festival jaguar Palomino, único en su especie en la Guajira. Creador de AltoparlanteMusic en 2007 una de las primeras agencias de musica independiente del país, incursiona en la producción técnica, artística y de escenarios realizando grandes eventos masivos. ",
+                "Biblioteca Mario Carvajal","--/--/2018 --:--","Johana Saavedra", "Productor de Eventos \nMusicales",latLng);
         arrayList.add(conferenceObj);
         arrayList.add(conferenceObj2);
-        arrayList.add(conferenceObj);
-        arrayList.add(conferenceObj2);
+        arrayList.add(conferenceObj3);
+        arrayList.add(conferenceObj4);
+        arrayList.add(conferenceObj5);
         return arrayList;
     }
 

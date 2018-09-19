@@ -15,8 +15,22 @@
     <string name="title_activity_bands">Bands</string>
     <string name="title_activity_sponsors">Sponsors</string>
     <string name="title_activity_map">Map</string>
+    <string name="title_activity_Info">Info</string>
+
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="offline_title">Offline Login</string>
+    <string name="offline_txt">Without FB login you cannot use the special gifts we have for you</string>
+    <string name="continue_btn">Continue</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="no_cnx">No Internet Connection Detected</string>
+    <string name="log_to_offer">You must be login to get the offers!!!</string>
+    <string name="need_msn">Need Messenger installed to do that!!!!</string>
+    <string name="sure_logout">Sure you wanna logout?</string>
+    <string name="bands_soon">BANDS INFO WILL BE HERE SOON...!!!</string>
+    <string name="speaker">Speaker</string>
+    <string name="schedule">Schedule</string>
+    <string name="place">Place</string>
 
 </resources>

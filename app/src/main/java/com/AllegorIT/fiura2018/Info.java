@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,10 +16,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,30 +31,33 @@ import com.AllegorIT.fiura2018.fragment.ContentFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.maps.model.LatLng;
+
+import org.w3c.dom.Text;
 
 
-public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
+public class Info extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
     private ViewAnimator viewAnimator;
     private LinearLayout linearLayout;
-    private GridView gv;
     private boolean offline;
+    private VideoView myVideoView;
     private Activity mContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sponsors);
+        setContentView(R.layout.activity_info);
         Bundle bundle = getIntent().getExtras();
-        mContext = this;
         offline = bundle.getBoolean("offline");
+        mContext = this;
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
+        viewAnimator = new ViewAnimator<>(this, list,drawerLayout,this);
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,118 +66,45 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
         });
         setActionBar();
         createMenuList();
-        viewAnimator = new ViewAnimator<>(this, list,drawerLayout,this);
-        gv = findViewById(R.id.grid_view);
-        gv.setAdapter(new GridAdapter(this,getDataSet()));
 
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SponsorObj s =(SponsorObj)adapterView.getItemAtPosition(i);
-                Toast.makeText(getApplicationContext(),s.getSponsor_name(),Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        TextView info = (TextView) findViewById(R.id.Info);
+        String infoText = "Recomendaciones para el FIURA 2018\n\n" +
+                "•\tEl ingreso es para personas mayores de 18 años. \n" +
+                "•\tQueda restringido el ingreso de accesorios con taches, cadenas, reatas, astas de banderas, tablas de skate, palos, envases de ningún tipo, armas blancas, armas de fuego, objetos contundentes, cortopunzantes o cualquier otro elemento que pueda lesionar a los asistentes al Festival. \n" +
+                "•\tReconozcan muy bien las salidas de evacuación y los equipos de primeros auxilios que se encuentran el lugar del concierto. \n" +
+                "•\tIdentifiquen las zonas de baños. \n" +
+                "•\tAcuerden siempre un punto de encuentro por si se pierde algunos de sus acompañantes. \n" +
+                "\n" +
+                " ¿ES LA PRIMERA VEZ QUE VIENE AL FIURA? \n" +
+                "\n" +
+                "•\tEste festival se realiza en la Universidad del Valle Sede Meléndez, por lo tanto, al estar situado en un Campus Universitario NO está autorizado ingreso de vehículos de público en general, tours o artistas locales. \n" +
+                "•\tTodas las personas, incluidos sus maletines, bolsos, canguros, etc, serán requisadas en el primer anillo de seguridad, cualquier elemento restringido será retenido antes de ingresar al FIURA. \n" +
+                "•\tNo está permitido acampar dentro del campus, ni en zonas contiguas a la Universidad del Valle. \n" +
+                "\n" +
+                "PARA CONVIVIR EN PAZ \n\n" +
+                "\n" +
+                "•\tNo se permite el ingreso de personas en visible estado de embriaguez o bajo efectos de sustancia psicoactivas o alucinógenas. Igualmente, no se permitirá el ingreso de ningún tipo de bebidas alcohólicas. \n" +
+                "•\tNo se permite ingresar, beber, inhalar, fumar, inyectarse o consumir de alguna otra forma, cualquier tipo de sustancias alcohólicas, alucinógenas, enervantes, psicodélicas, disociativas, delirantes, opioides, sedantes, anestésicas, hipnóticas, euforizantes, estimulantes, depresivas, y demás que se consideren ilícitas, en cualquier zona dentro del Festival. \n" +
+                "•\tDebe ir bien alimentado (a) o llevar dinero, los puestos de venta de alimentación e hidratación estarán en servicio durante todo el evento. Por lo tanto, NO se permite el ingreso de alimentos y ni bebidas de ningún tipo. \n" +
+                "•\tSi están en el “pogo” y alguien se cae, lo auxiliamos y ayudamos a parar. \n" +
+                "•\tEste atento a todas las recomendaciones de seguridad realizadas por parte de los organizadores y presentadores del evento, así como del personal de Logística. \n" +
+                "•\tNo se permite el ingreso al evento vistiendo camisetas alusivas a cualquier equipo de fútbol, o elementos alusivos a estos.\n" +
+                "•\tDebe portar documento de identidad y carnet de afiliación EPS, esto en caso que se presentara algún incidente que requiera atención médica prioritaria. \n" +
+                "•\tSe recomienda a las mujeres en estado de embarazo cuidar de su integridad física manteniéndose a una distancia segura del “pogo”.  \n" +
+                "\n" +
+                "BIENVENIDO AL #FIURA2018\n" +
+                "\n" +
+                "•\tRecuerde que el FIURA es una fiesta para la sana convivencia, la apertura y el respeto por las diferentes expresiones artísticas. Se espera que el público llegue cargado de alegría, entusiasmo, respeto y tolerancia para disfrutar al máximo de la diversidad musical de la región y nuestros invitados Nacionales e Internacionales.\n";
+        info.setText(infoText);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
-
-    public ArrayList<SponsorObj> getDataSet(){
-        ArrayList<SponsorObj> arrayList = new ArrayList<>();
-        SponsorObj sponsorObj1 = new SponsorObj(R.drawable.la_fuente_soda, new LatLng(3.397863, -76.539862),"La Fuente de Soda");
-        SponsorObj sponsorObj2 = new SponsorObj(R.drawable.altavoz, new LatLng(3.397863, -76.539862),"Altavoz");
-        SponsorObj sponsorObj3 = new SponsorObj(R.drawable.agente_naranja, new LatLng(3.397863, -76.539862),"Agente Naranja");
-        SponsorObj sponsorObj4 = new SponsorObj(R.drawable.barloventus, new LatLng(3.397863, -76.539862),"Barloventus Bar");
-        SponsorObj sponsorObj5 = new SponsorObj(R.drawable.cali_tatto2, new LatLng(3.397863, -76.539862),"Cali Tatto");
-        SponsorObj sponsorObj6 = new SponsorObj(R.drawable.carpa_intolerancia, new LatLng(3.397863, -76.539862),"Carpa Intolerancia");
-        SponsorObj sponsorObj7 = new SponsorObj(R.drawable.lo_mundano, new LatLng(3.397863, -76.539862),"Lo mundano");
-        SponsorObj sponsorObj8 = new SponsorObj(R.drawable.logo_garra, new LatLng(3.397863, -76.539862),"Garra Producciones");
-        SponsorObj sponsorObj9 = new SponsorObj(R.drawable.nuestro_bar, new LatLng(3.397863, -76.539862),"Nuestro Bar");
-        SponsorObj sponsorObj10 = new SponsorObj(R.drawable.el_faro, new LatLng(3.397863, -76.539862),"El Faro Pizzeria Limonar");
-        SponsorObj sponsorObj11 = new SponsorObj(R.drawable.festivalfff, new LatLng(3.397863, -76.539862),"Festivalfff");
-        SponsorObj sponsorObj12 = new SponsorObj(R.drawable.ibague_c_r, new LatLng(3.397863, -76.539862),"Ibagué ciudad rock");
-        SponsorObj sponsorObj13 = new SponsorObj(R.drawable.indie_fest, new LatLng(3.397863, -76.539862),"Indie fest");
-        SponsorObj sponsorObj14 = new SponsorObj(R.drawable.rockopolis, new LatLng(3.397863, -76.539862),"Rockopolis");
-        SponsorObj sponsorObj15 = new SponsorObj(R.drawable.ev_backline, new LatLng(3.397863, -76.539862),"ev backline");
-        SponsorObj sponsorObj16 = new SponsorObj(R.drawable.blue_hell, new LatLng(3.397863, -76.539862),"Blue Hell");
-        SponsorObj sponsorObj17 = new SponsorObj(R.drawable.amor_fe_logo, new LatLng(3.397863, -76.539862),"Amor y fe");
-        SponsorObj sponsorObj18 = new SponsorObj(R.drawable.madame_b, new LatLng(3.397863, -76.539862),"Fundación Madame Blue");
-        SponsorObj sponsorObj19 = new SponsorObj(R.drawable.jaguar, new LatLng(3.397863, -76.539862),"Festival Jaguar");
-
-        arrayList.add(sponsorObj1);
-        arrayList.add(sponsorObj2);
-        arrayList.add(sponsorObj3);
-        arrayList.add(sponsorObj4);
-        arrayList.add(sponsorObj5);
-        arrayList.add(sponsorObj6);
-        arrayList.add(sponsorObj7);
-        arrayList.add(sponsorObj8);
-        arrayList.add(sponsorObj9);
-        arrayList.add(sponsorObj10);
-        arrayList.add(sponsorObj11);
-        arrayList.add(sponsorObj12);
-        arrayList.add(sponsorObj13);
-        arrayList.add(sponsorObj14);
-        arrayList.add(sponsorObj15);
-        arrayList.add(sponsorObj16);
-        arrayList.add(sponsorObj17);
-        arrayList.add(sponsorObj18);
-        arrayList.add(sponsorObj19);
-        return arrayList;
-    }
-
-  private void setActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                drawerLayout,         /* DrawerLayout object */
-                toolbar,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                linearLayout.removeAllViews();
-                linearLayout.invalidate();
-            }
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                if (slideOffset > 0.6 && linearLayout.getChildCount() == 0)
-                    viewAnimator.showMenuContent();
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
-        drawerLayout.setDrawerListener(drawerToggle);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
-
 
     private void createMenuList() {
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.icn_close);
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
         list.add(menuItem);
-
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
@@ -190,9 +121,9 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
             SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
             list.add(menuItem7);
         }
-
         SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
         list.add(menuItem2);
+
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MESSENGER, R.drawable.messenger);
@@ -322,6 +253,56 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
             }, 800);
         }
     }
+
+
+
+    private void setActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                drawerLayout,         /* DrawerLayout object */
+                toolbar,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                linearLayout.removeAllViews();
+                linearLayout.invalidate();
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                if (slideOffset > 0.6 && linearLayout.getChildCount() == 0)
+                    viewAnimator.showMenuContent();
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
 
     @Override
     public void disableHomeButton() {

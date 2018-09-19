@@ -72,6 +72,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
         myRecycler.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         myRecycler.setLayoutManager(mLayoutManager);
+        if(getDataSet().size()==0)Toast.makeText(getApplicationContext(), R.string.bands_soon,Toast.LENGTH_LONG).show();
         mAdapter = new MyRecyclerViewAdapterBands(getDataSet(),this);
         myRecycler.setAdapter(mAdapter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -83,8 +84,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.drawable.home);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
-        list.add(menuItem2);
+
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.YOUTUBE, R.drawable.youtube);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SPEAKERS, R.drawable.confe);
@@ -101,7 +101,8 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
             SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OFFERS, R.drawable.sale);
             list.add(menuItem7);
         }
-
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.INFO, R.drawable.info2);
+        list.add(menuItem2);
 
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.FACEBOOK, R.drawable.fb);
         list.add(menuItem8);
@@ -125,9 +126,13 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
             intent[0] = new Intent(getApplication(),SpeakerActivity.class);
             intent[0].putExtra("offline", offline);
         }
+        else if(slideMenuItem.getName().equals(ContentFragment.INFO)){
+            intent[0] = new Intent(getApplication(),Info.class);
+            intent[0].putExtra("offline", offline);
+        }
         else if(slideMenuItem.getName().equals(ContentFragment.OFFERS)){
             if(offline){
-                Toast.makeText(this,"You must be login to get the offers!!!",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.log_to_offer,Toast.LENGTH_LONG).show();
             }
             else {
                 intent[0] = new Intent(getApplication(),OffersActivity.class);
@@ -161,7 +166,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/807003995983852/")));
             }catch (Exception e){
                 try{
-                    Toast.makeText(getApplicationContext(),"Need Messenger installed to do that!!!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.need_msn,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.facebook.orca")));
                     overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
                 }
@@ -195,12 +200,11 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
             }
         }
         else if (slideMenuItem.getName().equals(ContentFragment.LOGOUT)) {
-
             new MaterialDialog.Builder(mContext)
                     .title("Logout")
-                    .content("Sure you wanna logout?")
-                    .positiveText("Continue")
-                    .negativeText("Cancel")
+                    .content(R.string.sure_logout)
+                    .positiveText(R.string.continue_btn)
+                    .negativeText(R.string.cancel_btn)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -211,7 +215,6 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                         }
                     })
                     .show();
-
         }
 
         else{
@@ -298,7 +301,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
         ArrayList<BandObj> arrayList = new ArrayList<>();
         LatLng latLng = new LatLng(3.371430, -76.530339);
 
-        arrayList.add(new BandObj(R.drawable.legend_maker,
+        /*arrayList.add(new BandObj(R.drawable.legend_maker,
                 "LEGEND MAKER es una banda de Heavy Power Metal fundada en Cali, con más de 20 años trayectoria musical. Con estilo veloz y melódico, la banda ha desarrollado un sonido potente donde el despliegue técnico de los músicos aflora para deleitar al público con canciones influenciadas por el neoclasicismo y el rock progresivo.","Colombia",
                 "Heavy Power Metal","Univalle","---- --/-- --:--",
                 "Legend Maker",latLng));
@@ -314,7 +317,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 "RA- LA CULEBRA",latLng));
 
         arrayList.add(new BandObj(R.drawable.vientre,
-                "16 años","Colombia",
+                "Vientre es una banda de Post Hardcore creada en el 2016 en Cali. En el 2017 la banda lanzó su primer EP \"Las Huellas que Dejamos\" con el cual  viajó a través de las principales ciudades de Colombia, Ecuador y México. \"Semillas\" es su primer trabajo de larga duración y será lanzado en Octubre de 2018.","Colombia",
                 "Post Hardcore","Univalle","---- --/-- --:--",
                 "Vientre",latLng));
 
@@ -378,10 +381,16 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 "NoJazz","Univalle","---- --/-- --:--",
                 "Militantex",latLng));
 
+
         arrayList.add(new BandObj(R.drawable.psychopath_billy,
                 "El Psychopath Billy nace a mediados de noviembre del 2008 en la ciudad de Palmira, Como una banda Psychobilly conformado por: Ruderocker Voz y Guitarra, GG el gallo Gutierrez Baterista y Mizinga Bajo. Cuenta con presentaciones en conciertos y festivales de diferentes partes del país y del exterior.","Colombia",
                 "psychobilly ","Univalle","---- --/-- --:--",
                 "psychopath billy",latLng));
+
+        arrayList.add(new BandObj(R.drawable.bmk,
+                "BIG MAMBO KILLER, Proyecto electrónico, con influencias de bigbeat, drum n bass, world music, breackbeat. Creado en Mexico en 2015 por Christian de la Espriella (productor musical, conocido por su proyecto de rock, Pornomotora.)","Colombia",
+                "Big beat/Drum n Bass/World music ","Univalle","---- --/-- --:--",
+                "BigMamboKiller",latLng));
 
         arrayList.add(new BandObj(R.drawable.koyi_k_utho,
                 "KOYI K UTHO nace como tributo al piloto de la serie animada Mazinger Z,  ha editado tres placas discográficas: Mechanical Human Prototype (2004), VioLogic (2007) para la disquera EMI Music, Evi lution (2016), Cinco sencillos: E.V.A (2001), Koyi K utho (2002), Mechanical Animal, Fire on Fire (2011), Decode (2012)","Colombia",
@@ -435,17 +444,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 "Con más de quince años de carrera es seguro decir que We Are Wolves es una banda con experiencia. A través de sus seis discos, han innovado dentro del art, dance, punk, pop. Su lanzamiento más reciente, WRONG, presenta un sonido más brillante, más pop y dramático para la banda, probando que estos lobos siguen aun de caza.  ",
                 "Canada",
                 "Punk/Dance/Pop","Univalle","---- --/-- --:--",
-                "We are Wolves",latLng));
-
-
-
-
-
-
-
-
-
-
+                "We are Wolves",latLng));*/
 
         return arrayList;
 
