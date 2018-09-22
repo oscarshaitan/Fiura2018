@@ -17,68 +17,74 @@ repositories {
 
 
 android {
+    signingConfigs {
+        firma {
+            keyAlias 'key4'
+            keyPassword 'F1UR42018'
+            storeFile file('D:/Android/Keys/fiura.jks')
+            storePassword 'F1UR4KEY'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.shaitan.yalantistest"
+        applicationId "com.AllegorIT.fiura2018"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 11
+        versionName "1.1.1"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.firma
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.firma
         }
+    }
+    productFlavors {
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 
 dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support:support-v4:27.1.1'
-
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-
     implementation 'com.facebook.android:facebook-login:4.34.0'
-
     //cilinder slide
     implementation 'me.relex:circleindicator:1.2.2@aar'
-
     //youtube
-
-    implementation('com.google.apis:google-api-services-youtube:v3-rev198-1.23.0')
+    implementation 'com.google.apis:google-api-services-youtube:v3-rev198-1.23.0'
     implementation 'com.google.http-client:google-http-client-android:1.23.0'
     implementation 'com.google.api-client:google-api-client-android:1.23.0'
     implementation 'com.google.api-client:google-api-client-gson:1.20.0'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
-
     //2version
-
     //implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
     //implementation project(':YalantisMenu')
-
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true;
     }
-
     implementation('com.github.yalantis:Side-Menu.Android:1.0.1') {
         transitive = true;
     }
-
-
 }

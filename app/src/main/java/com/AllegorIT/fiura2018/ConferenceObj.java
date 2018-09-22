@@ -1,7 +1,5 @@
 package com.AllegorIT.fiura2018;
 
-import android.widget.ImageView;
-
 import com.google.android.gms.maps.model.LatLng;
 
 public class ConferenceObj {

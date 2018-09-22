@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">Fiura2018</string>
+    <string name="app_name" translatable="false">Fiura</string>
 
-    <string name="facebook_app_id">1824345584278525</string>
-    <string name="fb_login_protocol_scheme">fb1824345584278525</string>
+    <string name="facebook_app_id" translatable="false">1824345584278525</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1824345584278525</string>
     <string name="title_activity_home">Home</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
     <string name="title_activity_offers">Offers</string>
     <string name="title_activity_speakers">Speakers</string>
     <string name="title_activity_bands">Bands</string>
@@ -18,19 +18,22 @@
     <string name="title_activity_Info">Info</string>
 
 
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
+    <string name="drawer_open" translatable="false">Open</string>
+    <string name="drawer_close" translatable="false">Close</string>
     <string name="offline_title">Offline Login</string>
     <string name="offline_txt">Without FB login you cannot use the special gifts we have for you</string>
     <string name="continue_btn">Continue</string>
     <string name="cancel_btn">Cancel</string>
     <string name="no_cnx">No Internet Connection Detected</string>
     <string name="log_to_offer">You must be login to get the offers!!!</string>
-    <string name="need_msn">Need Messenger installed to do that!!!!</string>
+    <string name="need_msn">You need Messenger installed to do that!!!!</string>
     <string name="sure_logout">Sure you wanna logout?</string>
-    <string name="bands_soon">BANDS INFO WILL BE HERE SOON...!!!</string>
+    <string name="bands_soon">"THE INFORMATION OF THE BANDS WILL BE HERE SOON ... !!! "</string>
     <string name="speaker">Speaker</string>
     <string name="schedule">Schedule</string>
     <string name="place">Place</string>
+    <string name="offline_login">Offline Login</string>
+    <string name="skip_video">SKIP VIDEO</string>
+    <string name="tap_offer">Tap on the offers some of them have special gifts when you tap on it!!</string>
 
 </resources>

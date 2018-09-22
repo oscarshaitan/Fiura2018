@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,18 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import java.util.ArrayList;
-import java.util.List;
-import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.model.SlideMenuItem;
-
 import com.AllegorIT.fiura2018.Lib.ViewAnimator;
 import com.AllegorIT.fiura2018.fragment.ContentFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+import java.util.List;
+
+import yalantis.com.sidemenu.interfaces.Resourceble;
+import yalantis.com.sidemenu.model.SlideMenuItem;
 
 
 public class Info extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
@@ -169,8 +167,14 @@ public class Info extends AppCompatActivity implements ViewAnimator.ViewAnimator
             intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
-            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
-            intent[0].putExtra("offline", offline);
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("youtube://user/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
         }
         else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
             try{
@@ -318,5 +322,10 @@ public class Info extends AppCompatActivity implements ViewAnimator.ViewAnimator
     @Override
     public void addViewToContainer(View view) {
         linearLayout.addView(view);
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 }

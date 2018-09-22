@@ -9,12 +9,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import yalantis.com.sidemenu.R;
 import yalantis.com.sidemenu.animation.FlipAnimation;
 import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 public class ViewAnimator<T extends Resourceble> {
     public static final int CIRCULAR_REVEAL_ANIMATION_DURATION = 500;

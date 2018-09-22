@@ -7,12 +7,12 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -149,8 +149,14 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
             intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
-            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
-            intent[0].putExtra("offline", offline);
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("youtube://user/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
         }
         else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
             try{
@@ -388,9 +394,9 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 "psychopath billy",latLng));
 
         arrayList.add(new BandObj(R.drawable.bmk,
-                "BIG MAMBO KILLER, Proyecto electrónico, con influencias de bigbeat, drum n bass, world music, breackbeat. Creado en Mexico en 2015 por Christian de la Espriella (productor musical, conocido por su proyecto de rock, Pornomotora.)","Colombia",
+                "Proyecto electrónico, con influencias de bigbeat, drum n bass, world music, breackbeat. Creado en Meixco en 2015 por Christian de la espriella (productor musical, conocido por su proyecto de rock, pornomotora.)La música de RUA MAKHIL-A, esta creada en su mayor parte basándose en sampling, y poniendo en primer plano, la fuerza de los vientos (trompetas y trombones), sobre bases rítmicas folclóricas como el mapale, y  dancefloor , como el drum n bass.","Colombia",
                 "Big beat/Drum n Bass/World music ","Univalle","---- --/-- --:--",
-                "BigMamboKiller",latLng));
+                "RUA MAKHIL-LA",latLng));
 
         arrayList.add(new BandObj(R.drawable.koyi_k_utho,
                 "KOYI K UTHO nace como tributo al piloto de la serie animada Mazinger Z,  ha editado tres placas discográficas: Mechanical Human Prototype (2004), VioLogic (2007) para la disquera EMI Music, Evi lution (2016), Cinco sencillos: E.V.A (2001), Koyi K utho (2002), Mechanical Animal, Fire on Fire (2011), Decode (2012)","Colombia",
@@ -447,6 +453,11 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 "We are Wolves",latLng));*/
 
         return arrayList;
+
+    }
+
+    @Override
+    public void onBackPressed(){
 
     }
 

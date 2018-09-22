@@ -20,16 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import java.util.ArrayList;
-import java.util.List;
-import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.model.SlideMenuItem;
-
 import com.AllegorIT.fiura2018.Lib.ViewAnimator;
 import com.AllegorIT.fiura2018.fragment.ContentFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import yalantis.com.sidemenu.interfaces.Resourceble;
+import yalantis.com.sidemenu.model.SlideMenuItem;
 
 
 public class Home2 extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
@@ -153,8 +154,14 @@ public class Home2 extends AppCompatActivity implements ViewAnimator.ViewAnimato
             intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
-            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
-            intent[0].putExtra("offline", offline);
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("youtube://user/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
         }
         else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
             try{
@@ -303,4 +310,11 @@ public class Home2 extends AppCompatActivity implements ViewAnimator.ViewAnimato
     public void addViewToContainer(View view) {
         linearLayout.addView(view);
     }
+
+    @Override
+    public void onBackPressed(){
+
+    }
+
+
 }

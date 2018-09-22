@@ -13,14 +13,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.InputType;
 import android.util.Base64;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -33,13 +31,12 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import io.fabric.sdk.android.Fabric;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,6 +45,8 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+
+import io.fabric.sdk.android.Fabric;
 
 
 
@@ -99,7 +98,7 @@ public class Login extends AppCompatActivity {
         });
         final boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
-        //haskey();
+
         final TextView skip = (TextView)findViewById(R.id.skip);
         if(isLoggedIn){
             loginButton.setVisibility(View.INVISIBLE);
@@ -208,7 +207,7 @@ public class Login extends AppCompatActivity {
     private void haskey() {
 
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.AllegorIT.fiura2018", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.shaitan.yalantistest", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());

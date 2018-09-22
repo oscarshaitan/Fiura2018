@@ -1,7 +1,6 @@
 package com.AllegorIT.fiura2018;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MyRecyclerViewAdapterSpeakers extends RecyclerView
         .Adapter<MyRecyclerViewAdapterSpeakers
@@ -46,6 +47,13 @@ public class MyRecyclerViewAdapterSpeakers extends RecyclerView
         holder.speakerName.setText(mDataset.get(position).getSpeakerName());
         holder.rol.setText(mDataset.get(position).getRol());
         holder.idImg = mDataset.get(position).getSpeakerImg();
+
+        Picasso picasso = new Picasso.Builder(getApplicationContext())
+                .indicatorsEnabled(false)
+                .loggingEnabled(false) //add other settings as needed
+                .build();
+
+
         Picasso.get()
                 .load(holder.idImg)
                 .placeholder(R.drawable.ic_launcher_background)

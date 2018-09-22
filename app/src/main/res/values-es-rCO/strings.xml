@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_home">Inicio</string>
+    <string name="title_activity_offers">Ofertas</string>
+    <string name="title_activity_speakers">Conferencistas</string>
+    <string name="title_activity_bands">Bandas</string>
+    <string name="title_activity_sponsors">Aliados</string>
+    <string name="title_activity_map">Mapa</string>
+    <string name="title_activity_Info">Info</string>
+    <string name="offline_title">Ingreso sin internet</string>
+    <string name="offline_txt">Sin el inicio de sesión FB no puedes usar los regalos especiales que tenemos para usted</string>
+    <string name="continue_btn">Continuar</string>
+    <string name="cancel_btn">Cancelar</string>
+    <string name="no_cnx">No se detecta conexión a internet</string>
+    <string name="log_to_offer">" ¡Debes iniciar sesión para recibir las ofertas!"</string>
+    <string name="need_msn">¡Necesitas que Messenger esté instalado para hacer eso!</string>
+    <string name="sure_logout">" ¿Seguro que quieres desconectarte?"</string>
+    <string name="bands_soon">" LA INFORMACIÓN DE LAS BANDAS ESTARÁ AQUÍ PRONTO ... !!!"</string>
+    <string name="speaker">Conferencista</string>
+    <string name="schedule">Programación</string>
+    <string name="place">Lugar</string>
+    <string name="offline_login">Ingreso sin internet</string>
+    <string name="skip_video">SALTAR VÍDEO</string>
+    <string name="tap_offer">Toca las ofertas, algunos de ellos tienen regalos especiales cuando lo tocas!!</string>
+</resources>

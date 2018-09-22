@@ -20,17 +20,18 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.model.SlideMenuItem;
-
 import com.AllegorIT.fiura2018.Lib.ViewAnimator;
 import com.AllegorIT.fiura2018.fragment.ContentFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import yalantis.com.sidemenu.interfaces.Resourceble;
+import yalantis.com.sidemenu.model.SlideMenuItem;
 
 
 public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
@@ -80,7 +81,7 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
         ArrayList<SponsorObj> arrayList = new ArrayList<>();
         SponsorObj sponsorObj1 = new SponsorObj(R.drawable.la_fuente_soda, new LatLng(3.397863, -76.539862),"La Fuente de Soda");
         SponsorObj sponsorObj2 = new SponsorObj(R.drawable.altavoz, new LatLng(3.397863, -76.539862),"Altavoz");
-        SponsorObj sponsorObj3 = new SponsorObj(R.drawable.agente_naranja, new LatLng(3.397863, -76.539862),"Agente Naranja");
+        SponsorObj sponsorObj3 = new SponsorObj(R.drawable.agente, new LatLng(3.397863, -76.539862),"Agente Naranja");
         SponsorObj sponsorObj4 = new SponsorObj(R.drawable.barloventus, new LatLng(3.397863, -76.539862),"Barloventus Bar");
         SponsorObj sponsorObj5 = new SponsorObj(R.drawable.cali_tatto2, new LatLng(3.397863, -76.539862),"Cali Tatto");
         SponsorObj sponsorObj6 = new SponsorObj(R.drawable.carpa_intolerancia, new LatLng(3.397863, -76.539862),"Carpa Intolerancia");
@@ -97,6 +98,7 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
         SponsorObj sponsorObj17 = new SponsorObj(R.drawable.amor_fe_logo, new LatLng(3.397863, -76.539862),"Amor y fe");
         SponsorObj sponsorObj18 = new SponsorObj(R.drawable.madame_b, new LatLng(3.397863, -76.539862),"Fundación Madame Blue");
         SponsorObj sponsorObj19 = new SponsorObj(R.drawable.jaguar, new LatLng(3.397863, -76.539862),"Festival Jaguar");
+        SponsorObj sponsorObj20 = new SponsorObj(R.drawable.rappi, new LatLng(3.397863, -76.539862),"Rappi");
 
         arrayList.add(sponsorObj1);
         arrayList.add(sponsorObj2);
@@ -107,6 +109,7 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
         arrayList.add(sponsorObj7);
         arrayList.add(sponsorObj8);
         arrayList.add(sponsorObj9);
+        arrayList.add(sponsorObj20);
         arrayList.add(sponsorObj10);
         arrayList.add(sponsorObj11);
         arrayList.add(sponsorObj12);
@@ -238,8 +241,14 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
             intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
-            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
-            intent[0].putExtra("offline", offline);
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("youtube://user/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
         }
         else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
             try{
@@ -337,5 +346,10 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
     @Override
     public void addViewToContainer(View view) {
         linearLayout.addView(view);
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 }

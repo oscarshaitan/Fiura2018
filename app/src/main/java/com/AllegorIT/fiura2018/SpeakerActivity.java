@@ -20,17 +20,18 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.model.SlideMenuItem;
-
 import com.AllegorIT.fiura2018.Lib.ViewAnimator;
 import com.AllegorIT.fiura2018.fragment.ContentFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import yalantis.com.sidemenu.interfaces.Resourceble;
+import yalantis.com.sidemenu.model.SlideMenuItem;
 
 
 public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
@@ -194,8 +195,14 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
             intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
-            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
-            intent[0].putExtra("offline", offline);
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("youtube://user/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
         }
         else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
             try{
@@ -303,7 +310,7 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
                 "Biblioteca Mario Carvajal","--/--/2018 --:--","José Antonio \nMartínez Ramírez", "Programador, Productor \n y Gestor Cultural",latLng);
 
         ConferenceObj conferenceObj2 = new ConferenceObj(R.drawable.paola_g,"Industrias creativas \ny la música",
-                "Co - Fundadora de la agencia de prensa y PR Garra Producciones. Jefe de prensa y PR de Doctor Krápula, ha manejado el Booking y Management de agrupaciones como Koyi k Utho, entre otras. Tourmanager y Jefe de prensa de como Panteón Rococó, entre otras. Participa  en mercados culturales Circulart, Bomm, Mama Event y Womex.",
+                "Co- fundadora de la agencia de prensa y PR Garra Producciones. Jefe de Prensa y PR de Doctor Krápula, ha manejado el booking y management de agrupaciones como Koyi K UTho, entre otras. Tourmanager y Jefe de prensa de agrupaciones como Panteón Rococó entre otras. Participa en mercados culturales como Circulart, Bomm, Mama Event y Womex",
                 "Biblioteca Mario Carvajal","--/--/2018 --:--","Ana María Uribe", "Realizadora Audiovisual",latLng);
 
 
@@ -328,6 +335,11 @@ public class SpeakerActivity extends AppCompatActivity implements ViewAnimator.V
         return arrayList;
     }
 
+
+    @Override
+    public void onBackPressed(){
+
+    }
 
 
 }

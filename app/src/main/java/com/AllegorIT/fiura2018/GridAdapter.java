@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.widget.ImageView.ScaleType.CENTER_CROP;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 final class GridAdapter extends BaseAdapter {
     private Activity activity;
@@ -55,6 +56,11 @@ final class GridAdapter extends BaseAdapter {
         int sponsorId = sponsors.get(position).getSponsor_img();
 
         // Trigger the download of the URL asynchronously into the image view.
+        Picasso picasso = new Picasso.Builder(getApplicationContext())
+                .indicatorsEnabled(false)
+                .loggingEnabled(false) //add other settings as needed
+                .build();
+
         Picasso.get() //
                 .load(sponsorId) //
                 .placeholder(R.drawable.ic_launcher_background) //

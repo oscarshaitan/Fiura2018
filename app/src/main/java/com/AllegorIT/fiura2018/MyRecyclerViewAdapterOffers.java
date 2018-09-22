@@ -2,19 +2,14 @@ package com.AllegorIT.fiura2018;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,7 +18,7 @@ public class MyRecyclerViewAdapterOffers extends RecyclerView
         .DataObjectHolder>{
 
     private ArrayList<OffersObj> mDataset;
-    private static Activity activity;
+    private Activity activity;
 
     public MyRecyclerViewAdapterOffers(ArrayList<OffersObj> mDataset, Activity activity) {
         this.mDataset = mDataset;
@@ -60,7 +55,14 @@ public class MyRecyclerViewAdapterOffers extends RecyclerView
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(mDataset.get(position).getSponsor_name().equals("Agente Naranja")){
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://www.agentenaranja.co/?coupon_code=promofiura")));
+                }
+                if(mDataset.get(position).getSponsor_name().equals("Tu zona ticket y FIURA")){
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://pro.comprastuzonaticket.com//carrito/inicioQr?id=101&t=QR")));
+                }
             }
         });
 

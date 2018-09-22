@@ -20,17 +20,18 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.model.SlideMenuItem;
-
 import com.AllegorIT.fiura2018.Lib.ViewAnimator;
 import com.AllegorIT.fiura2018.fragment.ContentFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import yalantis.com.sidemenu.interfaces.Resourceble;
+import yalantis.com.sidemenu.model.SlideMenuItem;
 
 
 public class OffersActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
@@ -71,6 +72,7 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
         mAdapter = new MyRecyclerViewAdapterOffers(getDataSet(),this);
         myRecycler.setAdapter(mAdapter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        Toast.makeText(this, R.string.tap_offer,Toast.LENGTH_LONG).show();
     }
 
     private ArrayList<OffersObj> getDataSet() {
@@ -83,9 +85,11 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
         OffersObj offersObj5 = new OffersObj(R.drawable.nuestrobar_promo,R.drawable.nuestro_bar, new LatLng(3.4709375,-76.5270671),"Nuestro Bar");
         OffersObj offersObj6 = new OffersObj(R.drawable.fmb_promo,R.drawable.madame_b, new LatLng(3.4709375,-76.5270671),"Fundación Madame Blue");
         OffersObj offersObj7 = new OffersObj(R.drawable.amor_fe,R.drawable.amor_fe_logo, new LatLng(3.4853537,-76.5033645),"Amor y fe");
+        OffersObj offersObj8 = new OffersObj(R.drawable.agente_naranja_promo,R.drawable.agente, new LatLng(3.4709375,-76.5270671),"Agente Naranja");
         arrayList.add(offersObj1);
         arrayList.add(offersObj2);
         arrayList.add(offersObj3);
+        arrayList.add(offersObj8);
         arrayList.add(offersObj4);
         arrayList.add(offersObj5);
         arrayList.add(offersObj6);
@@ -213,8 +217,14 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
             intent[0].putExtra("offline", offline);
         }
         else if(slideMenuItem.getName().equals(ContentFragment.YOUTUBE)){
-            intent[0] = new Intent(getApplication(),YouTubeActivity.class);
-            intent[0].putExtra("offline", offline);
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("youtube://user/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCSwOaEBNEnXrI-AbDL8XpCQ")));
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
         }
         else if(slideMenuItem.getName().equals(ContentFragment.FACEBOOK)){
             try{
@@ -312,5 +322,10 @@ public class OffersActivity extends AppCompatActivity implements ViewAnimator.Vi
     @Override
     public void addViewToContainer(View view) {
         linearLayout.addView(view);
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 }
