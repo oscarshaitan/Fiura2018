@@ -17,19 +17,33 @@
             android:layout_height="match_parent"
             android:orientation="vertical"/>
 
-        <LinearLayout
-            android:id="@+id/content_frame"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="53dp"
-            android:background="@color/black">
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="53dp"
+                android:background="@color/black">
 
-           <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:src="@drawable/home_pic"/>
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/bandas_locales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bandas_locales"/>
+
+                <ImageView
+                    android:id="@+id/home_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/home_pic"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                Intent intent = new Intent(mContext,Home2.class);
+                                Intent intent = new Intent(mContext,VideoBandas.class);
                                 intent.putExtra("offline", true);
                                 startActivity(intent);
                                 overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
@@ -127,7 +127,7 @@ public class Login extends AppCompatActivity {
 
         myVideoView = (VideoView)findViewById(R.id.video);
 
-        //myVideoView.stopPlayback();
+
 
 
         skip.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +185,7 @@ public class Login extends AppCompatActivity {
         try {
             URL profile_picture = new URL("https://graph.facebook.com/"+object.getString("id")+"/picture?width=50&heigth=50");
             String Name = object.getString("name");
-            Intent intent = new Intent(this,Home2.class);
+            Intent intent = new Intent(this,VideoBandas.class);
             intent.putExtra("offline", "false");
             startActivity(intent);
             overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);

@@ -15,7 +15,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -40,7 +42,6 @@ public class Home2 extends AppCompatActivity implements ViewAnimator.ViewAnimato
     private ViewAnimator viewAnimator;
     private LinearLayout linearLayout;
     private boolean offline;
-    private VideoView myVideoView;
     private Activity mContext;
 
 
@@ -64,22 +65,32 @@ public class Home2 extends AppCompatActivity implements ViewAnimator.ViewAnimato
         setActionBar();
         createMenuList();
         viewAnimator = new ViewAnimator<>(this, list,drawerLayout,this);
-        myVideoView = (VideoView)findViewById(R.id.video);
 
-        try {
 
-            myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.home));
-            myVideoView.start();
 
-            myVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
+        ImageView imageView = (ImageView)findViewById(R.id.home_pic);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://pro.comprastuzonaticket.com/carrito/?id=106")));
+            }
+        });
 
-                }
-            });
-        }catch (Exception e){
-            e.getStackTrace();
-        }
+        ImageView bandas_locales = (ImageView)findViewById(R.id.bandas_locales );
+        bandas_locales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext,VideoBandas.class);
+                intent.putExtra("offline", true);
+                startActivity(intent);
+                overridePendingTransition(R.animator.activity_open_translate, R.animator.activity_close_scale);
+            }
+        });
+
+
+
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 

@@ -61,7 +61,7 @@ public class MyRecyclerViewAdapterOffers extends RecyclerView
                 }
                 if(mDataset.get(position).getSponsor_name().equals("Tu zona ticket y FIURA")){
                     activity.startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://pro.comprastuzonaticket.com//carrito/inicioQr?id=101&t=QR")));
+                            Uri.parse("https://pro.comprastuzonaticket.com/carrito/?id=106")));
                 }
             }
         });

@@ -35,5 +35,8 @@
     <string name="offline_login">Offline Login</string>
     <string name="skip_video">SKIP VIDEO</string>
     <string name="tap_offer">Tap on the offers some of them have special gifts when you tap on it!!</string>
+    <string name="replay">Replay</string>
+    <string name="repeat">Do you want to repeat the video?</string>
+    <string name="go_repeat">On Home you can always access to the video again ;) !!!</string>
 
 </resources>

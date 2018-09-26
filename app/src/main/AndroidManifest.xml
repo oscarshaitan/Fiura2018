@@ -64,7 +64,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="98d452998c19ffede56cc9bb976b614aa447e39e" />
@@ -85,8 +84,11 @@
             android:name=".OffersActivity"
             android:label="@string/title_activity_offers"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Info"
+        <activity
+            android:name=".Info"
             android:label="@string/title_activity_Info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".VideoBandas"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

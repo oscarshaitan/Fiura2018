@@ -307,7 +307,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
         ArrayList<BandObj> arrayList = new ArrayList<>();
         LatLng latLng = new LatLng(3.371430, -76.530339);
 
-        /*arrayList.add(new BandObj(R.drawable.legend_maker,
+       arrayList.add(new BandObj(R.drawable.legend_maker,
                 "LEGEND MAKER es una banda de Heavy Power Metal fundada en Cali, con más de 20 años trayectoria musical. Con estilo veloz y melódico, la banda ha desarrollado un sonido potente donde el despliegue técnico de los músicos aflora para deleitar al público con canciones influenciadas por el neoclasicismo y el rock progresivo.","Colombia",
                 "Heavy Power Metal","Univalle","---- --/-- --:--",
                 "Legend Maker",latLng));
@@ -369,7 +369,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 "Rap JUDIO de matanza danza",latLng));
 
 
-
+/*
 
 
         arrayList.add(new BandObj(R.drawable.surviving,
@@ -393,7 +393,7 @@ public class BandActivity extends AppCompatActivity implements ViewAnimator.View
                 "psychobilly ","Univalle","---- --/-- --:--",
                 "psychopath billy",latLng));
 
-        arrayList.add(new BandObj(R.drawable.bmk,
+        arrayList.add(new BandObj(R.drawable.rmk,
                 "Proyecto electrónico, con influencias de bigbeat, drum n bass, world music, breackbeat. Creado en Meixco en 2015 por Christian de la espriella (productor musical, conocido por su proyecto de rock, pornomotora.)La música de RUA MAKHIL-A, esta creada en su mayor parte basándose en sampling, y poniendo en primer plano, la fuerza de los vientos (trompetas y trombones), sobre bases rítmicas folclóricas como el mapale, y  dancefloor , como el drum n bass.","Colombia",
                 "Big beat/Drum n Bass/World music ","Univalle","---- --/-- --:--",
                 "RUA MAKHIL-LA",latLng));

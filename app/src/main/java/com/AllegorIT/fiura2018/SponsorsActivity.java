@@ -170,7 +170,6 @@ public class SponsorsActivity extends AppCompatActivity implements ViewAnimator.
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-
     private void createMenuList() {
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.icn_close);
         list.add(menuItem0);
